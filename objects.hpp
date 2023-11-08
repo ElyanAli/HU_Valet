@@ -3,7 +3,7 @@
 using namespace std;
 
 class Objects{
-    private:
+    protected:
         int positionX;
         int positionY;
         SDL_Rect srcRect;
