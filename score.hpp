@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-class Score {
+class Score: public UI {
     private:
         int currentScore;
 

@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-class Time {
+class Time: public UI {
     private:
         int timeRemaining;
     public:
