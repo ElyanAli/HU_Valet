@@ -31,5 +31,7 @@ public:
     void close();
     SDL_Texture* loadTexture( std::string path );
     void run();
+    void HandleKeyPress(SDL_Keycode key);
+    void HandleKeyRelease(SDL_Keycode key);
 };
 

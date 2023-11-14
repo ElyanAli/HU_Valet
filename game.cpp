@@ -1,5 +1,5 @@
 #include "game.hpp"
-// #include "car.hpp"
+#include "car.hpp"
 // #include "changeColourButton.hpp"
 // #include "coins.hpp"
 // #include "collisionManager.hpp"
@@ -74,8 +74,8 @@ bool Game::loadMedia()
 	//Loading success flag
 	bool success = true;
 	
-	assets = loadTexture("assets.png");
-    gTexture = loadTexture("hu.png");
+	assets = loadTexture("./images/car1_blue.png");
+    gTexture = loadTexture("./images/level1.png");
 	if(assets==NULL || gTexture==NULL)
     {
         printf("Unable to run due to error: %s\n",SDL_GetError());
@@ -131,7 +131,7 @@ void Game::run( )
 {
 	bool quit = false;
 	SDL_Event e;
-
+    Car playerCar;
 
 	while( !quit )
 	{
@@ -139,17 +139,31 @@ void Game::run( )
 		while( SDL_PollEvent( &e ) != 0 )
 		{
 			//User requests quit
-			if( e.type == SDL_QUIT )
-			{
-				quit = true;
-			}
+			// if( e.type == SDL_QUIT )
+			// {
+			// 	quit = true;
+			// }
 
-			if(e.type == SDL_MOUSEBUTTONDOWN){
-			//this is a good location to add pigeon in linked list.
-				int xMouse, yMouse;
-				SDL_GetMouseState(&xMouse,&yMouse);
-				// createObject(xMouse, yMouse);
-			}
+			// if(e.type == SDL_MOUSEBUTTONDOWN){
+			// //this is a good location to add pigeon in linked list.
+			// 	int xMouse, yMouse;
+			// 	SDL_GetMouseState(&xMouse,&yMouse);
+			// 	// createObject(xMouse, yMouse);
+			// }
+
+            switch (e.type) {
+            case SDL_QUIT:
+                quit = true;
+                break;
+            case SDL_KEYDOWN:
+                HandleKeyPress(e.key.keysym.sym);
+                break;
+            case SDL_KEYUP:
+                HandleKeyRelease(e.key.keysym.sym);
+                break;
+            default:
+                break;
+            }
 		}
 
 		SDL_RenderClear(gRenderer); //removes everything from renderer
@@ -164,4 +178,42 @@ void Game::run( )
 	    SDL_Delay(200);	//causes sdl engine to delay for specified miliseconds
 	}
 			
+}
+
+void Game::HandleKeyPress(SDL_Keycode key) {
+    switch (key)
+    {
+    case SDLK_UP:
+        playerCar.accelerate();
+        break;
+    case SDLK_DOWN:
+        playerCar.deaccelerate();
+        break;
+    case SDLK_LEFT:
+        playerCar.turnLeft();
+        break;
+    case SDLK_RIGHT:
+        playerCar.turnRight();
+        break;
+    default:
+        break;
+    }
+}
+
+void Game::HandleKeyRelease(SDL_Keycode key) {
+    switch (key)
+    {
+    case SDLK_UP:
+        playerCar.releaseAccelerate();
+        break;
+    case SDLK_DOWN:
+        playerCar.releaseBreak();
+        break;
+    case SDLK_RIGHT:
+    case SDLK_LEFT:
+        playerCar.straighten();
+    
+    default:
+        break;
+    }
 }
