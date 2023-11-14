@@ -8,18 +8,15 @@ class Objects{
     protected:
         int positionX;
         int positionY;
-        SDL_Rect srcRect;
         SDL_Texture* image;
         SDL_Renderer* renderer;
+        SDL_Rect srcRect;
     public:
         Objects(SDL_Renderer*);
         int getPositionX();
         int getPositionY();
         SDL_Rect* getSrcRect();
-        SDL_Texture* getImage();
-
-        virtual void setPositionX(int posX) = 0;
-        virtual void setPositionY(int posY) = 0;
-        void setSrcRect(SDL_Rect srcRect);
+        void setPositionX(int posX) = 0;
+        void setPositionY(int posY) = 0;
         void setImage(string img);
 };
