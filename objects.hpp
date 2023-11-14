@@ -1,5 +1,7 @@
 #include <iostream>
-#include <SDL.h>
+// #include <SDL.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 using namespace std;
 
 class Objects{
@@ -10,13 +12,13 @@ class Objects{
         SDL_Texture* image;
     public:
         Objects();
-        int getPositionX();
-        int getPositionY();
+        virtual int getPositionX() = 0;
+        virtual int getPositionY() = 0;
         SDL_Rect getSrcRect();
         SDL_Texture* getImage();
 
-        void setPositionX(int posX);
-        void setPositionY(int posY);
+        virtual void setPositionX(int posX) = 0;
+        virtual void setPositionY(int posY) = 0;
         void setSrcRect(SDL_Rect srcRect);
         void setImage(SDL_Texture* img);
 };
