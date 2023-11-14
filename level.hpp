@@ -6,15 +6,20 @@
 #include "parkingSpot.hpp"
 using namespace std;
 
-class Level : public Objects{
+class Level{
     private:
         int levelNumber;
-        vector<Obstacles> obstacles;
+        vector<Obstacle> obstacles;
         vector<Coins> coins;
-        parkingSpot parking_spot;
+        parkingSpot* parking;
+        SDL_Renderer* renderer;
+        string path;
         SDL_Texture* image;
     public:
+        Level(SDL_Renderer*, int, parkingSpot*, string);
         void loadObstacles();
-        void loadCoins();
+        // void loadCoins();
+        void insertObstacle(SDL_Renderer* r, string pth, SDL_Rect rct, SDL_Rect mrct);
+        void loadLevel();
 
 };

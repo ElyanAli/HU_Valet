@@ -9,9 +9,11 @@ class Objects{
         SDL_Texture* image;
         SDL_Renderer* renderer;
         SDL_Rect srcRect;
+        SDL_Rect moverRect;
         SDL_Texture* loadImage(string);
     public:
-        Objects(SDL_Renderer*, SDL_Rect );
+        Objects();
+        Objects(SDL_Renderer*, SDL_Rect, SDL_Rect );
         int getPositionX();
         int getPositionY();
         SDL_Rect* getSrcRect();

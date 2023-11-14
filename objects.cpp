@@ -1,9 +1,13 @@
 #include "objects.hpp"
 
+Objects::Objects(){
+    
+}
 
-Objects::Objects(SDL_Renderer* rndr, SDL_Rect rect){
+Objects::Objects(SDL_Renderer* rndr, SDL_Rect rect, SDL_Rect mrect){
     srcRect = rect;
     renderer = rndr;
+    moverRect = rect;
 }
 
 int Objects::getPositionX(){
@@ -27,6 +31,7 @@ SDL_Texture* Objects::loadImage(string path){
     SDL_Surface *imageSurface = SDL_LoadBMP(path.c_str());
     SDL_Texture *imageTexture = SDL_CreateTextureFromSurface(renderer, imageSurface);
     SDL_FreeSurface(imageSurface);
-    SDL_RenderCopy(renderer, imageTexture, NULL, NULL);
+    SDL_RenderCopy(renderer, imageTexture, &srcRect, &moverRect);
     SDL_RenderPresent(renderer);
+    return imageTexture;
 }
