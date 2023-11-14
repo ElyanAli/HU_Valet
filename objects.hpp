@@ -6,17 +6,14 @@ using namespace std;
 
 class Objects{
     protected:
-        int positionX;
-        int positionY;
         SDL_Texture* image;
         SDL_Renderer* renderer;
         SDL_Rect srcRect;
+        SDL_Texture* loadImage(string);
     public:
-        Objects(SDL_Renderer*);
+        Objects(SDL_Renderer*, SDL_Rect );
         int getPositionX();
         int getPositionY();
         SDL_Rect* getSrcRect();
-        void setPositionX(int posX) = 0;
-        void setPositionY(int posY) = 0;
         void setImage(string img);
 };
