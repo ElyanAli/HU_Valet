@@ -1,9 +1,9 @@
 #include "obstacles.hpp"
 
 
-Obstacles::Obstacles(SDL_Renderer* r, string pth, SDL_Rect rct): Objects(r, rct) , path(pth){}
+Obstacle::Obstacle(SDL_Renderer* r, string pth, SDL_Rect rct, SDL_Rect mrct): Objects(r, rct, mrct) , path(pth){}
 
 
-void Obstacles::loadObstacles(){
+void Obstacle::loadObstacle(){
     loadImage(path);
 };

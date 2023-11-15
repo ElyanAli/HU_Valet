@@ -1,10 +1,11 @@
 #include "objects.hpp"
 
 
-class Obstacles: public Objects{
+class Obstacle: public Objects{
     private:
         string path;
     public:
-        Obstacles(SDL_Renderer*, string, SDL_Rect);
-        void loadObstacles();
+        Obstacle(SDL_Renderer*, string, SDL_Rect, SDL_Rect);
+        void loadObstacle();
+        
 };
