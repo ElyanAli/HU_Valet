@@ -16,7 +16,7 @@ class Car : public Objects { //inherit from object
         // void moveRight(bool direction);
         // void moveLeft(bool direction);
         // void upState();
-        Car (SDL_Renderer* Rndr, SDL_Rect rect);
+        Car (SDL_Renderer*, SDL_Rect, SDL_Rect);
         void accelerate();
         void deaccelerate();
         void turnLeft();

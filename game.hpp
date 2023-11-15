@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "car.hpp"
+#include "welcomeScreen.hpp"
 
 class Game{
     //Screen dimension constants
@@ -28,6 +29,7 @@ class Game{
 
 public:
     Car playerCar;
+    welcomeScreen* w;
     Game();
     bool init();
     bool loadMedia();

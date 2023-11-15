@@ -15,12 +15,14 @@
 // #include "SDL 2/SDL 2"
 
 
-Game::Game() : gWindow(nullptr), gRenderer(nullptr), assets(nullptr), gTexture(nullptr), playerCar(gRenderer, {0, 0, 40, 74}) {}
+
+
+Game::Game() : gWindow(nullptr), gRenderer(nullptr), assets(nullptr), gTexture(nullptr), playerCar(gRenderer, {0, 0, 40, 74}, {0, 0, 40, 74}) {}
 bool Game::init()
 {
 	//Initialization flag
 	bool success = true;
-
+	
 	//Initialize SDL
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
 	{
@@ -63,6 +65,7 @@ bool Game::init()
 					printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
 					success = false;
 				}
+				Game::w = new welcomeScreen(gRenderer);
 
 			}
 		}
@@ -76,8 +79,10 @@ bool Game::loadMedia()
 	//Loading success flag
 	bool success = true;
 	
+
+
 	assets = loadTexture("./images/car1_blue.png");
-    gTexture = loadTexture("./images/level1.png");
+    gTexture = loadTexture(w->displayScreen());
 	if(assets==NULL || gTexture==NULL)
     {
         printf("Unable to run due to error: %s\n",SDL_GetError());

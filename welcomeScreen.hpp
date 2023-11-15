@@ -14,8 +14,8 @@ class welcomeScreen{
     SDL_Window* window;
     SDL_Renderer* renderer;
     welcomeScreen();
-    welcomeScreen(levelButton levelButt, changeColourButton B1, changeColourButton B2);
-    void displayOptions();
+    welcomeScreen(SDL_Renderer*);
+    string displayScreen();
     ~welcomeScreen();
 
 

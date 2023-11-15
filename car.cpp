@@ -1,6 +1,6 @@
 #include "car.hpp"
 
-Car::Car (SDL_Renderer* Rndr, SDL_Rect rect) : Objects(Rndr, rect) {}
+Car::Car (SDL_Renderer* Rndr, SDL_Rect rect, SDL_Rect mRect) : Objects(Rndr, rect, mRect) {}
 
 void Car::accelerate() {}
 void Car::deaccelerate() {}
