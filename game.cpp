@@ -14,6 +14,8 @@
 // #include "welcomeScreen.hpp"
 // #include "SDL 2/SDL 2"
 
+
+Game::Game() : gWindow(nullptr), gRenderer(nullptr), assets(nullptr), gTexture(nullptr), playerCar(gRenderer, {0, 0, 40, 74}) {}
 bool Game::init()
 {
 	//Initialization flag
@@ -131,8 +133,8 @@ void Game::run( )
 {
 	bool quit = false;
 	SDL_Event e;
-    Car playerCar;
-
+    // Car playerCar(gRenderer, {0, 0, 40, 74}); // Add SDL Rect here!!!
+    // playerCar = Car(gRenderer, {0, 0, 40, 74});
 	while( !quit )
 	{
 		//Handle events on queue
@@ -212,7 +214,7 @@ void Game::HandleKeyRelease(SDL_Keycode key) {
     case SDLK_RIGHT:
     case SDLK_LEFT:
         playerCar.straighten();
-    
+        break;
     default:
         break;
     }
