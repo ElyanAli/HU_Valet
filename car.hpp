@@ -1,8 +1,9 @@
+#pragma once
 #include <iostream>
-// #include "objects.hpp"
+#include "objects.hpp"
 using namespace std;
 
-class Car { //inherit from object
+class Car : public Objects { //inherit from object
     private:
         float acceleration;
         float speed;
@@ -15,6 +16,7 @@ class Car { //inherit from object
         // void moveRight(bool direction);
         // void moveLeft(bool direction);
         // void upState();
+        Car (SDL_Renderer* Rndr, SDL_Rect rect);
         void accelerate();
         void deaccelerate();
         void turnLeft();

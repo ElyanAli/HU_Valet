@@ -1,13 +1,14 @@
-
-// #include <SDL.h> //for Elyan
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-// #include <SDL_image.h> //For Elyan
+#pragma once
+#include <SDL.h> //for Elyan
+#include <SDL_image.h> //For Elyan
+// #include <SDL2/SDL.h>
+// #include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include <iostream>
 #include <string>
 #include <stdlib.h>
 #include <time.h>
+#include "car.hpp"
 
 class Game{
     //Screen dimension constants
@@ -24,10 +25,10 @@ class Game{
     SDL_Texture* gTexture = NULL;
     //global reference to png image sheets
     SDL_Texture* assets=NULL;
-    
 
 public:
-
+    Car playerCar;
+    Game();
     bool init();
     bool loadMedia();
     void close();
@@ -36,4 +37,3 @@ public:
     void HandleKeyPress(SDL_Keycode key);
     void HandleKeyRelease(SDL_Keycode key);
 };
-
