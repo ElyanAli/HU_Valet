@@ -9,7 +9,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include "car.hpp"
+#include  "mouse.hpp"
 #include "welcomeScreen.hpp"
+#include "levelButton.hpp"
 
 class Game{
     //Screen dimension constants
@@ -27,6 +29,11 @@ class Game{
     //global reference to png image sheets
     SDL_Texture* assets=NULL;
 
+    
+    SDL_Texture* mouseTexture = NULL;
+
+    // SDL_Texture* startTexture = NULL;
+
 public:
     Car playerCar;
     welcomeScreen* w;
@@ -38,4 +45,8 @@ public:
     void run();
     void HandleKeyPress(SDL_Keycode key);
     void HandleKeyRelease(SDL_Keycode key);
+
+    Mouse* mouse = nullptr;
+    levelButton level_button;
+
 };

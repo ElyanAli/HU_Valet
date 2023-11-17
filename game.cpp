@@ -13,11 +13,14 @@
 // #include "ui.hpp"
 #include "welcomeScreen.hpp"
 // #include "SDL 2/SDL 2"
+#include "levelButton.hpp"
 
 
 
 
-Game::Game() : gWindow(nullptr), gRenderer(nullptr), assets(nullptr), gTexture(nullptr), playerCar(gRenderer, {0, 0, 40, 74}, {0, 0, 40, 74}) {}
+Game::Game() : gWindow(nullptr), gRenderer(nullptr), assets(nullptr), gTexture(nullptr), playerCar(gRenderer, {0, 0, 40, 74}, {0, 0, 40, 74})/* level_button(gRenderer, {96, 4, 203, 89}, {500, 500, 203, 89})*/ {
+	// level_button = levelButton(gRenderer, {500, 300, 96, 4}, {1000, 600, 96, 4});
+}
 bool Game::init()
 {
 	//Initialization flag
@@ -38,7 +41,7 @@ bool Game::init()
 		}
 
 		//Create window
-		gWindow = SDL_CreateWindow( "HU Mania", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+		gWindow = SDL_CreateWindow( "HU Valet", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
 		if( gWindow == NULL )
 		{
 			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
@@ -70,7 +73,7 @@ bool Game::init()
 			}
 		}
 	}
-
+	mouse = new Mouse(gRenderer, {0, 0, 49, 50}, {1000, 600, 49, 50});
 	return success;
 }
 
@@ -82,8 +85,8 @@ bool Game::loadMedia()
 
 
 	assets = loadTexture("./images/car1_blue.png");
-    gTexture = loadTexture(w->displayScreen());
-	if(assets==NULL || gTexture==NULL)
+	// startTexture = loadTexture("./images/play3.png");
+	if(assets==NULL /*|| gTexture==NULL*/)
     {
         printf("Unable to run due to error: %s\n",SDL_GetError());
         success =false;
@@ -138,12 +141,15 @@ void Game::run( )
 {
 	bool quit = false;
 	SDL_Event e;
-	welcomeScreen w_screen;
-    // Car playerCar(gRenderer, {0, 0, 40, 74}); // Add SDL Rect here!!!
-    // playerCar = Car(gRenderer, {0, 0, 40, 74});
+	
+    level_button.srect.y = 0;
+    level_button.drect.x = 640 - level_button.drect.w / 2;
+    level_button.drect.y = 200;
+    
 	while( !quit )
-	{
-		//Handle events on queue
+	{	
+		
+		mouse->update();
 		while( SDL_PollEvent( &e ) != 0 )
 		{
 			
@@ -155,12 +161,22 @@ void Game::run( )
             case SDL_KEYDOWN:
                 HandleKeyPress(e.key.keysym.sym);
                 break;
+			case SDL_MOUSEBUTTONUP:
+				// SDL_Delay(0);
+				mouse->update();
+				//update button
+
+				break;
+
+					
             case SDL_KEYUP:
                 HandleKeyRelease(e.key.keysym.sym);
                 break;
             default:
                 break;
             }
+
+			
 		}
 
 		SDL_RenderClear(gRenderer); //removes everything from renderer
@@ -169,12 +185,18 @@ void Game::run( )
 		SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
 		//***********************draw the objects here********************
 
+		w->displayScreen();
+		w->displayButton();
+		mouse->draw();
+		// SDL_RenderCopy(gRenderer, mouseTexture, &mouse.rect, &mouse.point);
 		// drawObjects(gRenderer, assets);
 
 		//****************************************************************
     	SDL_RenderPresent(gRenderer); //displays the updated renderer
 
-	    SDL_Delay(200);	//causes sdl engine to delay for specified miliseconds
+	    SDL_Delay(0);	//causes sdl engine to delay for specified miliseconds
+		// SDL_Delay(200);
+		
 	}
 			
 }

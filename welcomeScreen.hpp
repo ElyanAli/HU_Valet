@@ -7,16 +7,21 @@ using namespace std;
 
 class welcomeScreen{
     private:
-    levelButton level_buttons;
+    levelButton *start = nullptr;
     changeColourButton button_1;
     changeColourButton button_2;
+    string screenPath;
+    SDL_Texture* loadImage(string);
     public:
     SDL_Window* window;
     SDL_Renderer* renderer;
     welcomeScreen();
     welcomeScreen(SDL_Renderer*);
-    string displayScreen();
+    void displayScreen();
+    // string displayMenu();
     ~welcomeScreen();
+    SDL_Texture* startTexture = NULL;
+    void displayButton();
 
 
 };
