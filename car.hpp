@@ -9,14 +9,16 @@ class Car : public Objects { //inherit from object
         float speed;
         int fuel;
         int collisionState;
-        SDL_Rect moverRect;
+        double angle;
+        // SDL_Rect moverRect;
     public:
         // void moveFront();
         // void moveBack();
         // void moveRight(bool direction);
         // void moveLeft(bool direction);
         // void upState();
-        Car (SDL_Renderer* Rndr, SDL_Rect rect);
+        Car (SDL_Renderer* Rndr, string path, SDL_Rect sRect, SDL_Rect mRect);
+        void draw();
         void accelerate();
         void deaccelerate();
         void turnLeft();

@@ -15,7 +15,7 @@
 // #include "SDL 2/SDL 2"
 
 
-Game::Game() : gWindow(nullptr), gRenderer(nullptr), assets(nullptr), gTexture(nullptr), playerCar(gRenderer, {0, 0, 40, 74}) {}
+Game::Game() : gWindow(nullptr), gRenderer(nullptr), assets(nullptr), gTexture(nullptr) {}
 bool Game::init()
 {
 	//Initialization flag
@@ -67,7 +67,7 @@ bool Game::init()
 			}
 		}
 	}
-
+	 ////
 	return success;
 }
 
@@ -78,6 +78,7 @@ bool Game::loadMedia()
 	
 	assets = loadTexture("./images/car1_blue.png");
     gTexture = loadTexture("./images/level1.png");
+	// cout<<gTexture<<endl;
 	if(assets==NULL || gTexture==NULL)
     {
         printf("Unable to run due to error: %s\n",SDL_GetError());
@@ -134,7 +135,10 @@ void Game::run( )
 	bool quit = false;
 	SDL_Event e;
 	welcomeScreen w_screen;
-    // Car playerCar(gRenderer, {0, 0, 40, 74}); // Add SDL Rect here!!!
+	SDL_Rect playerCarMoverRect = {200, 400, 42, 74};
+	SDL_Rect playerCarSrcRect = {0, 0, 42, 74};
+	playerCar = new Car(gRenderer, "images/car1_blue.png", playerCarSrcRect, playerCarMoverRect);
+    // Car playerCar(gRenderer, {0, 0, 40, 74}); // Add SDL Rect here!!
     // playerCar = Car(gRenderer, {0, 0, 40, 74});
 	while( !quit )
 	{
@@ -163,7 +167,7 @@ void Game::run( )
 		// SDL_CreateRenderer(w_screen.window, -1, 0);
 		SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
 		//***********************draw the objects here********************
-
+		playerCar->draw(); ///
 		// drawObjects(gRenderer, assets);
 
 		//****************************************************************
@@ -178,16 +182,16 @@ void Game::HandleKeyPress(SDL_Keycode key) {
     switch (key)
     {
     case SDLK_UP:
-        playerCar.accelerate();
+        playerCar->accelerate();
         break;
     case SDLK_DOWN:
-        playerCar.deaccelerate();
+        playerCar->deaccelerate();
         break;
     case SDLK_LEFT:
-        playerCar.turnLeft();
+        playerCar->turnLeft();
         break;
     case SDLK_RIGHT:
-        playerCar.turnRight();
+        playerCar->turnRight();
         break;
     default:
         break;
@@ -198,14 +202,14 @@ void Game::HandleKeyRelease(SDL_Keycode key) {
     switch (key)
     {
     case SDLK_UP:
-        playerCar.releaseAccelerate();
+        playerCar->releaseAccelerate();
         break;
     case SDLK_DOWN:
-        playerCar.releaseBreak();
+        playerCar->releaseBreak();
         break;
     case SDLK_RIGHT:
     case SDLK_LEFT:
-        playerCar.straighten();
+        playerCar->straighten();
         break;
     default:
         break;

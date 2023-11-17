@@ -27,7 +27,7 @@ class Game{
     SDL_Texture* assets=NULL;
 
 public:
-    Car playerCar;
+    Car* playerCar = nullptr;
     Game();
     bool init();
     bool loadMedia();

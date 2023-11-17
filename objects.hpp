@@ -14,6 +14,7 @@ class Objects{
         SDL_Texture* loadImage(string);
     public:
         Objects();
+        virtual void draw();
         Objects(SDL_Renderer*, SDL_Rect, SDL_Rect );
         int getPositionX();
         int getPositionY();
