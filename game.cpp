@@ -135,7 +135,7 @@ void Game::run( )
 	bool quit = false;
 	SDL_Event e;
 	welcomeScreen w_screen;
-	SDL_Rect playerCarMoverRect = {200, 400, 42, 74};
+	SDL_Rect playerCarMoverRect = {SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 42, 74};
 	SDL_Rect playerCarSrcRect = {0, 0, 42, 74};
 	playerCar = new Car(gRenderer, "images/car1_blue.png", playerCarSrcRect, playerCarMoverRect);
     // Car playerCar(gRenderer, {0, 0, 40, 74}); // Add SDL Rect here!!
@@ -173,45 +173,57 @@ void Game::run( )
 		//****************************************************************
     	SDL_RenderPresent(gRenderer); //displays the updated renderer
 
-	    SDL_Delay(200);	//causes sdl engine to delay for specified miliseconds
+	    SDL_Delay(50);	//causes sdl engine to delay for specified miliseconds
 	}
 			
 }
 
 void Game::HandleKeyPress(SDL_Keycode key) {
+	cout << "Key pressed: " << key << endl;
+	double v = 5.0; // constant velocity for simplicity
+    double phi = 0.0; // steering rate
+
     switch (key)
     {
     case SDLK_UP:
         playerCar->accelerate();
+		// playerCar->update(v, phi);
         break;
     case SDLK_DOWN:
         playerCar->deaccelerate();
+		// playerCar->update(-v, phi);
         break;
     case SDLK_LEFT:
         playerCar->turnLeft();
+		phi = -0.7; // adjust steering rate as needed
+        // playerCar->update(v, phi);
         break;
     case SDLK_RIGHT:
-        playerCar->turnRight();
+		playerCar->turnRight();
+		phi = 0.7; // adjust steering rate as needed
+        // playerCar->update(v, phi);
+        // playerCar->turn(-1);
         break;
     default:
         break;
     }
+	// playerCar->update(1000.0f/60);
 }
 
 void Game::HandleKeyRelease(SDL_Keycode key) {
-    switch (key)
-    {
-    case SDLK_UP:
-        playerCar->releaseAccelerate();
-        break;
-    case SDLK_DOWN:
-        playerCar->releaseBreak();
-        break;
-    case SDLK_RIGHT:
-    case SDLK_LEFT:
-        playerCar->straighten();
-        break;
-    default:
-        break;
-    }
+    // switch (key)
+    // {
+    // case SDLK_UP:
+    //     playerCar->releaseAccelerate();
+    //     break;
+    // case SDLK_DOWN:
+    //     playerCar->releaseBreak();
+    //     break;
+    // case SDLK_RIGHT:
+    // case SDLK_LEFT:
+    //     playerCar->straighten();
+    //     break;
+    // default:
+    //     break;
+    // }
 }
