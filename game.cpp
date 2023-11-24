@@ -15,7 +15,7 @@
 // #include "SDL 2/SDL 2"
 
 
-Game::Game() : gWindow(nullptr), gRenderer(nullptr), assets(nullptr), gTexture(nullptr), playerCar(gRenderer, {0, 0, 40, 74}) {}
+Game::Game() : gWindow(nullptr), gRenderer(nullptr), assets(nullptr), gTexture(nullptr) {}
 bool Game::init()
 {
 	//Initialization flag
@@ -67,7 +67,7 @@ bool Game::init()
 			}
 		}
 	}
-
+	 ////
 	return success;
 }
 
@@ -78,6 +78,7 @@ bool Game::loadMedia()
 	
 	assets = loadTexture("./images/car1_blue.png");
     gTexture = loadTexture("./images/level1.png");
+	// cout<<gTexture<<endl;
 	if(assets==NULL || gTexture==NULL)
     {
         printf("Unable to run due to error: %s\n",SDL_GetError());
@@ -134,7 +135,10 @@ void Game::run( )
 	bool quit = false;
 	SDL_Event e;
 	welcomeScreen w_screen;
-    // Car playerCar(gRenderer, {0, 0, 40, 74}); // Add SDL Rect here!!!
+	SDL_Rect playerCarMoverRect = {SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 42, 74};
+	SDL_Rect playerCarSrcRect = {0, 0, 42, 74};
+	playerCar = new Car(gRenderer, "images/car1_blue.png", playerCarSrcRect, playerCarMoverRect);
+    // Car playerCar(gRenderer, {0, 0, 40, 74}); // Add SDL Rect here!!
     // playerCar = Car(gRenderer, {0, 0, 40, 74});
 	while( !quit )
 	{
@@ -148,10 +152,12 @@ void Game::run( )
                 quit = true;
                 break;
             case SDL_KEYDOWN:
-                HandleKeyPress(e.key.keysym.sym);
+				pressedKeys.insert(e.key.keysym.sym);
+                HandleKeyPress();
                 break;
             case SDL_KEYUP:
-                HandleKeyRelease(e.key.keysym.sym);
+                HandleKeyRelease();
+				pressedKeys.erase(e.key.keysym.sym);
                 break;
             default:
                 break;
@@ -163,51 +169,67 @@ void Game::run( )
 		// SDL_CreateRenderer(w_screen.window, -1, 0);
 		SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
 		//***********************draw the objects here********************
-
+		playerCar->draw(); ///
 		// drawObjects(gRenderer, assets);
 
 		//****************************************************************
     	SDL_RenderPresent(gRenderer); //displays the updated renderer
 
-	    SDL_Delay(200);	//causes sdl engine to delay for specified miliseconds
+	    SDL_Delay(50);	//causes sdl engine to delay for specified miliseconds
 	}
 			
 }
 
-void Game::HandleKeyPress(SDL_Keycode key) {
-    switch (key)
-    {
-    case SDLK_UP:
-        playerCar.accelerate();
-        break;
-    case SDLK_DOWN:
-        playerCar.deaccelerate();
-        break;
-    case SDLK_LEFT:
-        playerCar.turnLeft();
-        break;
-    case SDLK_RIGHT:
-        playerCar.turnRight();
-        break;
-    default:
-        break;
-    }
+void Game::HandleKeyPress() {
+	if (pressedKeys.count(SDLK_UP))
+	{
+		playerCar->accelerate();
+	}
+	if (pressedKeys.count(SDLK_DOWN))
+	{
+		playerCar->decelerate();
+	}
+	if (pressedKeys.count(SDLK_LEFT))
+	{
+		playerCar->turnLeft();
+	}
+	if (pressedKeys.count(SDLK_RIGHT))
+	{
+		playerCar->turnRight();
+	}
+
+    // switch (key)
+    // {
+    // case SDLK_UP:
+    //     playerCar->accelerate();
+	// 	// playerCar->update(v, phi);
+    //     break;
+    // case SDLK_DOWN:
+    //     playerCar->deaccelerate();
+	// 	// playerCar->update(-v, phi);
+    //     break;
+    // case SDLK_LEFT:
+    //     playerCar->turnLeft();
+	// 	phi = -0.7; // adjust steering rate as needed
+    //     // playerCar->update(v, phi);
+    //     break;
+    // case SDLK_RIGHT:
+	// 	playerCar->turnRight();
+	// 	phi = 0.7; // adjust steering rate as needed
+    //     // playerCar->update(v, phi);
+    //     // playerCar->turn(-1);
+    //     break;
+    // default:
+    //     break;
+    // }
+	// playerCar->update(1000.0f/60);
 }
 
-void Game::HandleKeyRelease(SDL_Keycode key) {
-    switch (key)
-    {
-    case SDLK_UP:
-        playerCar.releaseAccelerate();
-        break;
-    case SDLK_DOWN:
-        playerCar.releaseBreak();
-        break;
-    case SDLK_RIGHT:
-    case SDLK_LEFT:
-        playerCar.straighten();
-        break;
-    default:
-        break;
-    }
+void Game::HandleKeyRelease() {
+    if (pressedKeys.count(SDLK_UP) ){
+        playerCar->releaseAccelerate();
+	}
+    if (pressedKeys.count(SDLK_DOWN)){
+        playerCar->releaseDeceleration();
+	}
 }

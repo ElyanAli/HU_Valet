@@ -1,6 +1,6 @@
 #pragma once
-#include <SDL.h> //for Elyan
-#include <SDL_image.h> //For Elyan
+#include <SDL2/SDL.h> //for Elyan
+#include <SDL2/SDL_image.h> //For Elyan
 // #include <SDL.h>
 // #include <SDL_image.h>
 #include <stdio.h>
@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "car.hpp"
+#include <unordered_set>
 
 class Game{
     //Screen dimension constants
@@ -26,14 +27,16 @@ class Game{
     //global reference to png image sheets
     SDL_Texture* assets=NULL;
 
+    // std::array<bool, SDLK_LAST> keysPressed;
+    std::unordered_set<SDL_Keycode> pressedKeys;
 public:
-    Car playerCar;
+    Car* playerCar = nullptr;
     Game();
     bool init();
     bool loadMedia();
     void close();
     SDL_Texture* loadTexture( std::string path );
     void run();
-    void HandleKeyPress(SDL_Keycode key);
-    void HandleKeyRelease(SDL_Keycode key);
+    void HandleKeyPress();
+    void HandleKeyRelease();
 };
