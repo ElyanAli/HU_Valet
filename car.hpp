@@ -11,7 +11,7 @@ class Car : public Objects { //inherit from object
     private:
         // float acceleration;
         
-        const double acceleration = 2;
+        const double acceleration = 3;
         const double ANGLE_CHANGE = 5;
         int fuel;
         int collisionState;

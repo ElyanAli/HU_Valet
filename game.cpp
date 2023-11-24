@@ -153,10 +153,10 @@ void Game::run( )
                 break;
             case SDL_KEYDOWN:
 				pressedKeys.insert(e.key.keysym.sym);
-                HandleKeyPress(e.key.keysym.sym);
+                HandleKeyPress();
                 break;
             case SDL_KEYUP:
-                HandleKeyRelease(e.key.keysym.sym);
+                HandleKeyRelease();
 				pressedKeys.erase(e.key.keysym.sym);
                 break;
             default:
@@ -180,28 +180,22 @@ void Game::run( )
 			
 }
 
-void Game::HandleKeyPress(SDL_Keycode key) {
-	cout << "Key pressed: " << key << endl;
-	double v = 5.0; // constant velocity for simplicity
-    double phi = 0.0; // steering rate
-
+void Game::HandleKeyPress() {
 	if (pressedKeys.count(SDLK_UP))
 	{
 		playerCar->accelerate();
 	}
 	if (pressedKeys.count(SDLK_DOWN))
 	{
-		playerCar->deaccelerate();
+		playerCar->decelerate();
 	}
 	if (pressedKeys.count(SDLK_LEFT))
 	{
 		playerCar->turnLeft();
-		phi = -0.7;
 	}
 	if (pressedKeys.count(SDLK_RIGHT))
 	{
 		playerCar->turnRight();
-		phi = 0.7;
 	}
 
     // switch (key)
@@ -231,38 +225,11 @@ void Game::HandleKeyPress(SDL_Keycode key) {
 	// playerCar->update(1000.0f/60);
 }
 
-void Game::HandleKeyRelease(SDL_Keycode key) {
-    // switch (key)
-    // {
-    // case SDLK_UP:
-    //     playerCar->releaseAccelerate();
-    //     break;
-    // case SDLK_DOWN:
-    //     playerCar->releaseBreak();
-    //     break;
-    // case SDLK_RIGHT:
-    // case SDLK_LEFT:
-    //     playerCar->straighten();
-    //     break;
-    // default:
-    //     break;
-    // }
-	if (pressedKeys.count(SDLK_UP))
-	{
-		playerCar->accelerate();
+void Game::HandleKeyRelease() {
+    if (pressedKeys.count(SDLK_UP) ){
+        playerCar->releaseAccelerate();
 	}
-	if (pressedKeys.count(SDLK_DOWN))
-	{
-		playerCar->deaccelerate();
-	}
-	if (pressedKeys.count(SDLK_LEFT))
-	{
-		playerCar->turnLeft();
-		// phi = -0.7;
-	}
-	if (pressedKeys.count(SDLK_RIGHT))
-	{
-		playerCar->turnRight();
-		// phi = 0.7;
+    if (pressedKeys.count(SDLK_DOWN)){
+        playerCar->releaseDeceleration();
 	}
 }

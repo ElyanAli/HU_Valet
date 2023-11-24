@@ -15,19 +15,18 @@ void Car::draw() {
     moverRect.x += static_cast<int>(velocity * sin(angle*(M_PI/180)));
     moverRect.y -= static_cast<int>(velocity * cos(angle*(M_PI/180)));
     SDL_RenderCopyEx(renderer, image, &srcRect, &moverRect, angle, &center, SDL_FLIP_NONE);
-    cout<<angle<<endl;
+    // cout<<angle<<endl;
 }
 
 
 void Car::accelerate() {
-    if (velocity <= 20){
+    if (velocity <= 15){
         velocity += acceleration;
+        
     }
-    moverRect.x += static_cast<int>(velocity * sin(angle*(M_PI/180)));
-    moverRect.y -= static_cast<int>(velocity * cos(angle*(M_PI/180)));
 }
 void Car::decelerate() {
-    if (velocity >= -20){
+    if (velocity >= -15){
         velocity -= acceleration;
     }
     
@@ -40,14 +39,22 @@ void Car::turnRight() {
 }
 void Car::releaseAccelerate() {
     while(velocity>0){
-        velocity -= acceleration;
+        velocity -= 5;
+        if (velocity< 0){
+            velocity = 0;
+            break;
+        }
         draw();
     }
 }
 void Car::releaseDeceleration() {
     while(velocity<0){
-        velocity += acceleration;
+        velocity += 5;
         draw();
+        if (velocity> 0){
+            velocity = 0;
+            break;
+        } 
     }
 }
 void Car::straighten() {
