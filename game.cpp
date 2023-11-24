@@ -11,7 +11,7 @@
 // #include "score.hpp"
 // #include "time.hpp"
 // #include "ui.hpp"
-// #include "welcomeScreen.hpp"
+#include "welcomeScreen.hpp"
 // #include "SDL 2/SDL 2"
 
 
@@ -133,6 +133,7 @@ void Game::run( )
 {
 	bool quit = false;
 	SDL_Event e;
+	welcomeScreen w_screen;
     // Car playerCar(gRenderer, {0, 0, 40, 74}); // Add SDL Rect here!!!
     // playerCar = Car(gRenderer, {0, 0, 40, 74});
 	while( !quit )
@@ -140,18 +141,7 @@ void Game::run( )
 		//Handle events on queue
 		while( SDL_PollEvent( &e ) != 0 )
 		{
-			//User requests quit
-			// if( e.type == SDL_QUIT )
-			// {
-			// 	quit = true;
-			// }
-
-			// if(e.type == SDL_MOUSEBUTTONDOWN){
-			// //this is a good location to add pigeon in linked list.
-			// 	int xMouse, yMouse;
-			// 	SDL_GetMouseState(&xMouse,&yMouse);
-			// 	// createObject(xMouse, yMouse);
-			// }
+			
 
             switch (e.type) {
             case SDL_QUIT:
@@ -169,6 +159,8 @@ void Game::run( )
 		}
 
 		SDL_RenderClear(gRenderer); //removes everything from renderer
+		// SDL_RenderCopy(w_screen.renderer, gTexture, NULL, NULL);
+		// SDL_CreateRenderer(w_screen.window, -1, 0);
 		SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
 		//***********************draw the objects here********************
 

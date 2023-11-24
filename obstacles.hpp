@@ -1,4 +1,4 @@
-#include "objects.cpp"
+#include "objects.hpp"
 
 
 class Obstacle: public Objects{
