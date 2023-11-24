@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "car.hpp"
+#include <unordered_set>
 
 class Game{
     //Screen dimension constants
@@ -26,6 +27,8 @@ class Game{
     //global reference to png image sheets
     SDL_Texture* assets=NULL;
 
+    // std::array<bool, SDLK_LAST> keysPressed;
+    std::unordered_set<SDL_Keycode> pressedKeys;
 public:
     Car* playerCar = nullptr;
     Game();

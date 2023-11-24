@@ -152,10 +152,12 @@ void Game::run( )
                 quit = true;
                 break;
             case SDL_KEYDOWN:
+				pressedKeys.insert(e.key.keysym.sym);
                 HandleKeyPress(e.key.keysym.sym);
                 break;
             case SDL_KEYUP:
                 HandleKeyRelease(e.key.keysym.sym);
+				pressedKeys.erase(e.key.keysym.sym);
                 break;
             default:
                 break;
@@ -183,30 +185,49 @@ void Game::HandleKeyPress(SDL_Keycode key) {
 	double v = 5.0; // constant velocity for simplicity
     double phi = 0.0; // steering rate
 
-    switch (key)
-    {
-    case SDLK_UP:
-        playerCar->accelerate();
-		// playerCar->update(v, phi);
-        break;
-    case SDLK_DOWN:
-        playerCar->deaccelerate();
-		// playerCar->update(-v, phi);
-        break;
-    case SDLK_LEFT:
-        playerCar->turnLeft();
-		phi = -0.7; // adjust steering rate as needed
-        // playerCar->update(v, phi);
-        break;
-    case SDLK_RIGHT:
+	if (pressedKeys.count(SDLK_UP))
+	{
+		playerCar->accelerate();
+	}
+	if (pressedKeys.count(SDLK_DOWN))
+	{
+		playerCar->deaccelerate();
+	}
+	if (pressedKeys.count(SDLK_LEFT))
+	{
+		playerCar->turnLeft();
+		phi = -0.7;
+	}
+	if (pressedKeys.count(SDLK_RIGHT))
+	{
 		playerCar->turnRight();
-		phi = 0.7; // adjust steering rate as needed
-        // playerCar->update(v, phi);
-        // playerCar->turn(-1);
-        break;
-    default:
-        break;
-    }
+		phi = 0.7;
+	}
+
+    // switch (key)
+    // {
+    // case SDLK_UP:
+    //     playerCar->accelerate();
+	// 	// playerCar->update(v, phi);
+    //     break;
+    // case SDLK_DOWN:
+    //     playerCar->deaccelerate();
+	// 	// playerCar->update(-v, phi);
+    //     break;
+    // case SDLK_LEFT:
+    //     playerCar->turnLeft();
+	// 	phi = -0.7; // adjust steering rate as needed
+    //     // playerCar->update(v, phi);
+    //     break;
+    // case SDLK_RIGHT:
+	// 	playerCar->turnRight();
+	// 	phi = 0.7; // adjust steering rate as needed
+    //     // playerCar->update(v, phi);
+    //     // playerCar->turn(-1);
+    //     break;
+    // default:
+    //     break;
+    // }
 	// playerCar->update(1000.0f/60);
 }
 
@@ -226,4 +247,22 @@ void Game::HandleKeyRelease(SDL_Keycode key) {
     // default:
     //     break;
     // }
+	if (pressedKeys.count(SDLK_UP))
+	{
+		playerCar->accelerate();
+	}
+	if (pressedKeys.count(SDLK_DOWN))
+	{
+		playerCar->deaccelerate();
+	}
+	if (pressedKeys.count(SDLK_LEFT))
+	{
+		playerCar->turnLeft();
+		// phi = -0.7;
+	}
+	if (pressedKeys.count(SDLK_RIGHT))
+	{
+		playerCar->turnRight();
+		// phi = 0.7;
+	}
 }
