@@ -12,6 +12,7 @@ using namespace std;
 
 levelButton start;
 welcomeScreen::welcomeScreen(){}
+
 welcomeScreen::welcomeScreen( SDL_Renderer* r)
     : renderer(r){
         start = new levelButton(r, {7, 34, 91, 34}, {450, 200, 91, 34}, "./images/play3.png");
