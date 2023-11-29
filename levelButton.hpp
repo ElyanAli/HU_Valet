@@ -12,7 +12,6 @@ class levelButton{
     bool isToggled = false;
     string buttonPath;
     levelButton();
-    SDL_Texture* loadTexture( std::string path );
     levelButton (SDL_Renderer*, SDL_Rect, SDL_Rect, string);;
 
     void update(Mouse&);

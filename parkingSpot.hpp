@@ -3,7 +3,7 @@
 #include "car.hpp"
 using namespace std;
 
-class parkingSpot:public Objects {
+class parkingSpot{
     private:
         bool parked;
         int xStart;
