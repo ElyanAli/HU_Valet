@@ -1,74 +1,68 @@
-#pragma once
-#include <iostream>
 #include "welcomeScreen.hpp"
-#include <SDL.h>
-
-
-// #include "levelButton.hpp"
-
-// #include "changeColourButton.hpp"
-using namespace std;
 
 welcomeScreen::welcomeScreen(){}
-welcomeScreen::welcomeScreen(levelButton levelButt, changeColourButton B1, changeColourButton B2)
-    : level_buttons(levelButt), button_1(B1), button_2(B2), window(nullptr), renderer(nullptr)
-    {
-        //creating window
-        window = SDL_CreateWindow("HU Valet", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN);
-        // Creating renderer
-        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
+welcomeScreen::welcomeScreen( SDL_Renderer* r)
+    : renderer(r){
+        start = new levelButton(renderer, {7, 34, 91, 34}, {450, 200, 91, 34}, "./images/play3.png");
+        screenPath = "./images/welcome3.png";
+        mouse = new Mouse(r, {0, 0, 49, 50}, {1000, 600, 49, 50});
+        // (*start).srect.y = 0;
+        // (*start).drect.x = 640 - (*start).drect.w / 2;
+        // (*start).drect.y = 200;   
     }
 
-    void welcomeScreen::displayOptions()
-    {
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // Set background color to white
-        SDL_RenderClear(renderer);
+SDL_Texture* welcomeScreen::loadImage(string path)
+{
+    SDL_Texture* newTexture = NULL;
+
+	//Load image at specified path
+	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
+	if( loadedSurface == NULL )
+	{
+		printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
+	}
+	else
+	{
+		//Create texture from surface pixels
+        newTexture = SDL_CreateTextureFromSurface( renderer, loadedSurface );
+		if( newTexture == NULL )
+		{
+			printf( "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
+		}
+
+		//Get rid of old loaded surface
+		SDL_FreeSurface( loadedSurface );
         
-        // Render welcome screen elements (simple text)
-        SDL_Color textColor = {0, 0, 0, 255}; // Black color
-        // Set the font size and style
-        int fontSize = 24;
-        SDL_Surface* surfaceMessage = nullptr;
-
-
-         // Create a font using SDL's built-in font
-        // SDL_Rect welcomeRect;
-        // welcomeRect.x = 100;
-        // welcomeRect.y = 200;
-
-        const char* welcomeMessage = "Welcome to HU Valet";
-        surfaceMessage = SDL_CreateRGBSurface(0, 200, 50, 32, 0, 0, 0, 0);
-        SDL_FillRect(surfaceMessage, NULL, SDL_MapRGB(surfaceMessage->format, 255, 255, 255));
-        // SDL_Color textColor = {0, 0, 0, 255}; // Black color
-
-        /// Create a surface for rendering text
-        SDL_Surface* textSurface = SDL_CreateRGBSurface(0, 200, 50, 32, 0, 0, 0, 0);
-        SDL_FillRect(textSurface, nullptr, SDL_MapRGB(textSurface->format, 255, 255, 255));
-        SDL_Texture* welcomeTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-
-        // Get the width and height of the rendered text
-        SDL_Rect welcomeRect;
-        welcomeRect.x = 100;
-        welcomeRect.y = 200;
-        welcomeRect.w = textSurface->w;
-        welcomeRect.h = textSurface->h;
-
-        // Render text texture
-        SDL_RenderCopy(renderer, welcomeTexture, nullptr, &welcomeRect);
-
-        // Cleanup
-        SDL_DestroyTexture(welcomeTexture);
-        SDL_FreeSurface(textSurface);
-
-        // Present the renderer
-        SDL_RenderPresent(renderer);
-
-
+	}
+    return newTexture;    
+    
     }
+
+void welcomeScreen::displayScreen()
+{
+    SDL_Texture* t = loadImage(screenPath);
+    SDL_RenderCopy(renderer, t, NULL, NULL);      
+}
+
+void welcomeScreen::displayButton()
+{
+    start->draw();   
+}
+
+void welcomeScreen::drawMouse(){
+    mouse->draw();
+}
+
+void welcomeScreen::update(bool buttonClicked){
+    mouse->update();
+    if (buttonClicked){
+        start->update(*mouse);
+    }
+}
 
     //destructor
-    welcomeScreen::~welcomeScreen() {
+welcomeScreen::~welcomeScreen() {
         SDL_DestroyRenderer(renderer);
         SDL_DestroyWindow(window);
         SDL_Quit();
