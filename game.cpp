@@ -73,7 +73,7 @@ bool Game::init()
 			}
 		}
 	}
-	mouse = new Mouse(gRenderer, {0, 0, 49, 50}, {1000, 600, 49, 50});
+	// mouse = new Mouse(gRenderer, {0, 0, 49, 50}, {1000, 600, 49, 50});
 	return success;
 }
 
@@ -142,17 +142,20 @@ void Game::run( )
 	bool quit = false;
 	SDL_Event e;
 	
-    level_button.srect.y = 0;
-    level_button.drect.x = 640 - level_button.drect.w / 2;
-    level_button.drect.y = 200;
+	w->displayScreen();
+	w->displayButton();
+	
+    // level_button.srect.y = 0;
+    // level_button.drect.x = 640 - level_button.drect.w / 2;
+    // level_button.drect.y = 200;
     
 	while( !quit )
 	{	
 		
-		mouse->update();
+		// mouse->update();
 		while( SDL_PollEvent( &e ) != 0 )
 		{
-			
+			w->update(false);
 
             switch (e.type) {
             case SDL_QUIT:
@@ -162,9 +165,8 @@ void Game::run( )
                 HandleKeyPress(e.key.keysym.sym);
                 break;
 			case SDL_MOUSEBUTTONUP:
-				// SDL_Delay(0);
-				mouse->update();
-				//update button
+				
+				w->update(true);
 
 				break;
 
@@ -182,12 +184,12 @@ void Game::run( )
 		SDL_RenderClear(gRenderer); //removes everything from renderer
 		// SDL_RenderCopy(w_screen.renderer, gTexture, NULL, NULL);
 		// SDL_CreateRenderer(w_screen.window, -1, 0);
-		SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
+		// SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
 		//***********************draw the objects here********************
-
 		w->displayScreen();
 		w->displayButton();
-		mouse->draw();
+		w->drawMouse();
+		// mouse->draw();
 		// SDL_RenderCopy(gRenderer, mouseTexture, &mouse.rect, &mouse.point);
 		// drawObjects(gRenderer, assets);
 

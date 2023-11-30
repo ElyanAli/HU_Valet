@@ -46,7 +46,7 @@ public:
     void HandleKeyPress(SDL_Keycode key);
     void HandleKeyRelease(SDL_Keycode key);
 
-    Mouse* mouse = nullptr;
-    levelButton level_button;
+    // Mouse* mouse = nullptr;
+    // levelButton level_button;
 
 };

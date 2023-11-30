@@ -5,17 +5,17 @@
 
 
 class levelButton{
-    public:
+    
     SDL_Renderer* ren;
     SDL_Texture* texture;
     SDL_Rect srect, drect;
     bool isToggled = false;
     string buttonPath;
-    levelButton();
-    levelButton (SDL_Renderer*, SDL_Rect, SDL_Rect, string);;
-
-    void update(Mouse&);
-    void draw();
+    public:
+        levelButton();
+        levelButton (SDL_Renderer*, SDL_Rect, SDL_Rect, string);;
+        void update(Mouse&);
+        void draw();
 
     // virtual ~levelButton();
 

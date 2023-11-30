@@ -9,13 +9,15 @@
 // #include "changeColourButton.hpp"
 using namespace std;
 
-
-levelButton start;
 welcomeScreen::welcomeScreen(){}
 welcomeScreen::welcomeScreen( SDL_Renderer* r)
     : renderer(r){
-        start = new levelButton(r, {7, 34, 91, 34}, {450, 200, 91, 34}, "./images/play3.png");
+        start = new levelButton(renderer, {7, 34, 91, 34}, {450, 200, 91, 34}, "./images/play3.png");
         screenPath = "./images/welcome3.png";
+        mouse = new Mouse(r, {0, 0, 49, 50}, {1000, 600, 49, 50});
+        // (*start).srect.y = 0;
+        // (*start).drect.x = 640 - (*start).drect.w / 2;
+        // (*start).drect.y = 200;   
     }
 
 SDL_Texture* welcomeScreen::loadImage(string path)
@@ -54,6 +56,17 @@ void welcomeScreen::displayScreen()
 void welcomeScreen::displayButton()
 {
     start->draw();   
+}
+
+void welcomeScreen::drawMouse(){
+    mouse->draw();
+}
+
+void welcomeScreen::update(bool buttonClicked){
+    mouse->update();
+    if (buttonClicked){
+        start->update(*mouse);
+    }
 }
 
     //destructor

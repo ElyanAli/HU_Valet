@@ -5,14 +5,13 @@
 
 levelButton::levelButton(){}
 levelButton::levelButton(SDL_Renderer* renderer, SDL_Rect srct, SDL_Rect mrct, string p): ren(renderer), buttonPath(p){
-    string play = p;
     SDL_Texture* newTexture = NULL;
 
 	//Load image at specified path
-	SDL_Surface* loadedSurface = IMG_Load( play.c_str() );
+	SDL_Surface* loadedSurface = IMG_Load( buttonPath.c_str() );
 	if( loadedSurface == NULL )
 	{
-		printf( "Unable to load image %s! SDL_image Error: %s\n", play.c_str(), IMG_GetError() );
+		printf( "Unable to load image %s! SDL_image Error: %s\n", buttonPath.c_str(), IMG_GetError() );
 	}
 	else
 	{
@@ -20,7 +19,7 @@ levelButton::levelButton(SDL_Renderer* renderer, SDL_Rect srct, SDL_Rect mrct, s
         newTexture = SDL_CreateTextureFromSurface( renderer, loadedSurface );
 		if( newTexture == NULL )
 		{
-			printf( "Unable to create texture from %s! SDL Error: %s\n", play.c_str(), SDL_GetError() );
+			printf( "Unable to create texture from %s! SDL Error: %s\n", buttonPath.c_str(), SDL_GetError() );
 		}
 
 		//Get rid of old loaded surface
@@ -37,11 +36,12 @@ void levelButton::update(Mouse& mouse){
     
         if (SDL_HasIntersection(&drect, &mouse.point)){
             isToggled = true;
-            srect.x = 400; 
+            cout<<"toggled"<<endl;
+            // srect.x = 400; 
         }
         else{
             isToggled = false;
-            srect.x = 0;
+            // srect.x = 0;
         cout<<"hiiiiiiiiiii"<<endl;
         }
 }
