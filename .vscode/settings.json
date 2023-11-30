@@ -3,7 +3,9 @@
         "*.ejs": "html",
         "ostream": "cpp",
         "iosfwd": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "system_error": "cpp",
+        "vector": "cpp"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }

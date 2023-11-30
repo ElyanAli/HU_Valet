@@ -54,9 +54,6 @@ void Car::releaseDeceleration() {
         if (velocity> 0){
             velocity = 0;
             break;
-        } 
+        }
     }
-}
-void Car::straighten() {
-    // angle -= 5;
 }

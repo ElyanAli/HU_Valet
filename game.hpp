@@ -1,6 +1,6 @@
 #pragma once
-#include <SDL.h> //for Elyan
-#include <SDL_image.h> //For Elyan
+#include <SDL2/SDL.h> //for Elyan
+#include <SDL2/SDL_image.h> //For Elyan
 // #include <SDL.h>
 // #include <SDL_image.h>
 #include <stdio.h>
@@ -9,6 +9,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include "car.hpp"
+#include <unordered_set>
+#include "keyboardHandler.hpp"
+
 
 class Game{
     //Screen dimension constants
@@ -17,23 +20,20 @@ class Game{
 
     //The window we'll be rendering to
     SDL_Window* gWindow = NULL;
-
     //The window renderer
     SDL_Renderer* gRenderer = NULL;
-
     //Current displayed texture
     SDL_Texture* gTexture = NULL;
-    //global reference to png image sheets
     SDL_Texture* assets=NULL;
+    keyboardHandler keyHandler;
 
 public:
-    Car playerCar;
+    Car* playerCar = nullptr;
     Game();
     bool init();
     bool loadMedia();
     void close();
     SDL_Texture* loadTexture( std::string path );
     void run();
-    void HandleKeyPress(SDL_Keycode key);
-    void HandleKeyRelease(SDL_Keycode key);
+    void updateCarPos();
 };

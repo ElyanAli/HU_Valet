@@ -31,6 +31,5 @@ class Car : public Objects { //inherit from object
         void turnRight();
         void releaseAccelerate();
         void releaseDeceleration();
-        void straighten();
 
 };

@@ -2,7 +2,7 @@
 #include <vector>
 #include "objects.hpp"
 #include "obstacles.hpp"
-#include "coins.hpp"
+// #include "coins.hpp"
 #include "parkingSpot.hpp"
 using namespace std;
 
@@ -10,7 +10,7 @@ class Level{
     private:
         int levelNumber;
         vector<Obstacle> obstacles;
-        vector<Coins> coins;
+        // vector<Coins> coins;
         parkingSpot* parking;
         SDL_Renderer* renderer;
         string path;
