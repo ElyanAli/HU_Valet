@@ -54,17 +54,16 @@ void welcomeScreen::drawMouse(){
     mouse->draw();
 }
 
-void welcomeScreen::update(bool buttonClicked){
+bool welcomeScreen::update(bool buttonClicked){
     mouse->update();
     if (buttonClicked){
-        start->update(*mouse);
+        return start->update(*mouse);
     }
+    else return false;
 }
 
     //destructor
 welcomeScreen::~welcomeScreen() {
-        SDL_DestroyRenderer(renderer);
-        SDL_DestroyWindow(window);
-        SDL_Quit();
+        
     }
     

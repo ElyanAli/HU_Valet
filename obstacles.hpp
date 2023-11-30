@@ -6,6 +6,6 @@ class Obstacle: public Objects{
         string path;
     public:
         Obstacle(SDL_Renderer*, string, SDL_Rect, SDL_Rect);
-        void loadObstacle();
+        void drawObstacle();
         
 };

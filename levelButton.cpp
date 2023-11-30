@@ -32,7 +32,7 @@ levelButton::levelButton(SDL_Renderer* renderer, SDL_Rect srct, SDL_Rect mrct, s
 }
 
 
-void levelButton::update(Mouse& mouse){
+bool levelButton::update(Mouse& mouse){
     
         if (SDL_HasIntersection(&drect, &mouse.point)){
             isToggled = true;
@@ -42,8 +42,9 @@ void levelButton::update(Mouse& mouse){
         else{
             isToggled = false;
             // srect.x = 0;
-        cout<<"hiiiiiiiiiii"<<endl;
+        // cout<<"hiiiiiiiiiii"<<endl;
         }
+        return isToggled;
 }
 
 void levelButton::draw(){

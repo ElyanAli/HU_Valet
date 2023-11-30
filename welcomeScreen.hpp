@@ -23,8 +23,6 @@ class welcomeScreen{
         SDL_Texture* startTexture = NULL;
         void displayButton();
         Mouse* mouse = nullptr;
-        void update(bool);
+        bool update(bool);
         void drawMouse();
-
-
 };

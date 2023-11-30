@@ -16,7 +16,7 @@ class levelButton{
     public:
         levelButton();
         levelButton (SDL_Renderer*, SDL_Rect, SDL_Rect, std::string);;
-        void update(Mouse&);
+        bool update(Mouse&);
         void draw();
 
     // virtual ~levelButton();
