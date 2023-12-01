@@ -4,10 +4,12 @@
 #include "obstacles.hpp"
 // #include "coins.hpp"
 #include "parkingSpot.hpp"
+#include "car.hpp"
 using namespace std;
 
 class Level{
     private:
+        
         int levelNumber;
         vector<Obstacle *> obstacles;
         // vector<Coins> coins;
@@ -17,7 +19,8 @@ class Level{
         SDL_Texture* image;
         SDL_Texture* loadLevel();
     public:
-        Level(SDL_Renderer*, int, parkingSpot*, string);
+        Car* playerCar = nullptr;
+        Level(SDL_Renderer*, int, parkingSpot*, string, string, SDL_Rect, SDL_Rect);
         void loadObstacles();
         void drawLevel();
         // void loadCoins();

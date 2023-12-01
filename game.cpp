@@ -54,11 +54,12 @@ bool Game::init()
 			}
 		}
 	}
-	 ////
+	////make the realGame
+	parkingGame = new realGame(gRenderer);
 	return success;
 }
 
-bool Game::loadMedia()
+/*bool Game::loadMedia()
 {
 	//Loading success flag
 	bool success = true;
@@ -73,6 +74,7 @@ bool Game::loadMedia()
     }
 	return success;
 }
+*/
 
 void Game::close()
 {
@@ -121,9 +123,9 @@ void Game::run( )
 {
 	bool quit = false;
 	SDL_Event e;
-	SDL_Rect playerCarMoverRect = {SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 42, 74};
-	SDL_Rect playerCarSrcRect = {0, 0, 42, 74};
-	playerCar = new Car(gRenderer, "images/car1_blue.png", playerCarSrcRect, playerCarMoverRect);
+	// SDL_Rect playerCarMoverRect = {SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 42, 74};
+	// SDL_Rect playerCarSrcRect = {0, 0, 42, 74};
+	// playerCar = new Car(gRenderer, "images/car1_blue.png", playerCarSrcRect, playerCarMoverRect);
 
 	while( !quit )
 	{
@@ -133,52 +135,23 @@ void Game::run( )
 			if (e.type == SDL_QUIT){
 				quit = true;
 			}else{
-				if (e.type== SDL_KEYDOWN || e.type == SDL_KEYUP){
-					keyHandler.handleKeyboardEvent(e);
-				}
+				parkingGame->updateCurrentState(e);
 			}  
         }
 
 		SDL_RenderClear(gRenderer); //removes everything from renderer
-		// SDL_RenderCopy(w_screen.renderer, gTexture, NULL, NULL);
-		// SDL_CreateRenderer(w_screen.window, -1, 0);
-		SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
+		
 		//***********************draw the objects here********************
-		updateCarPos();
-		playerCar->draw(); ///
+		parkingGame->drawCurrent();
 		// drawObjects(gRenderer, assets);
 
 		//****************************************************************
     	SDL_RenderPresent(gRenderer); //displays the updated renderer
 
-	    SDL_Delay(50);	//causes sdl engine to delay for specified miliseconds
+	    // SDL_Delay(50);	//causes sdl engine to delay for specified miliseconds
 	}
 }
 			
-void Game::updateCarPos(){
-	if (keyHandler.isPressed(SDLK_UP)){
-		playerCar->accelerate();
-	}
-	if (keyHandler.isPressed(SDLK_DOWN))
-	{
-		playerCar->decelerate();
-	}
-	if (keyHandler.isPressed(SDLK_LEFT))
-	{
-		playerCar->turnLeft();
-	}
-	if (keyHandler.isPressed(SDLK_RIGHT))
-	{
-		playerCar->turnRight();
-	}
-	if (keyHandler.isReleasedNow(SDLK_UP) ){
-        playerCar->releaseAccelerate();
-	}
-    if (keyHandler.isReleasedNow(SDLK_DOWN)){
-        playerCar->releaseDeceleration();
-	}
-
-}
 
 // void Game::HandleKeyPress() {
 // 	if (pressedKeys.count(SDLK_UP))

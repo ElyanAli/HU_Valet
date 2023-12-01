@@ -13,4 +13,5 @@ bool parkingSpot::checkParking(Car& thisCar){
         with the starting and ending coordinates of the parking, 
         if they match return true, else return false 
     */
+   return false;
 }

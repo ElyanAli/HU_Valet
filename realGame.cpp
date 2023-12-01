@@ -4,8 +4,9 @@ realGame::realGame(SDL_Renderer* r): gRenderer(r){
     wscreen = new welcomeScreen(gRenderer);
 }
 void realGame::createLevel1(){
-    parkingSpot levelParking = new parkingSpot();
-    Level* level1= new Level(gRenderer, 1, )
+    parkingSpot* levelParking = new parkingSpot(451, 532, 697, 823);
+    Level* level1= new Level(gRenderer, 1, levelParking, "./images/level1.png", "./images/car1_blue.png",{0, 0, 42, 74}, {741, 482, 42, 74});
+    levels.push_back(level1);
 }
 
 
@@ -26,15 +27,40 @@ void realGame::updateCurrentState(SDL_Event& event){
 		}
     }
 }
+void realGame::updateCarPos(){
+	if (keyHandler.isPressed(SDLK_UP)){
+		levels[level]->playerCar->accelerate();
+	}
+	if (keyHandler.isPressed(SDLK_DOWN))
+	{
+		levels[level]->playerCar->decelerate();
+	}
+	if (keyHandler.isPressed(SDLK_LEFT))
+	{
+		levels[level]->playerCar->turnLeft();
+	}
+	if (keyHandler.isPressed(SDLK_RIGHT))
+	{
+		levels[level]->playerCar->turnRight();
+	}
+	if (keyHandler.isReleasedNow(SDLK_UP) ){
+        levels[level]->playerCar->releaseAccelerate();
+	}
+    if (keyHandler.isReleasedNow(SDLK_DOWN)){
+        levels[level]->playerCar->releaseDeceleration();
+	}
+
+}
 
 void realGame::drawCurrent(){
     if (level == -1){
-        wscreen->displayButton();
+        wscreen->displayScreen();
         wscreen->displayButton();
         wscreen->update(false);
         wscreen->drawMouse();
     }
     else{
+        updateCarPos();
         levels[level]->drawLevel();
     }
 };

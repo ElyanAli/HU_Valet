@@ -1,11 +1,12 @@
 #include "level.hpp"
 
-Level::Level(SDL_Renderer* r, int level, parkingSpot* pSpot, string imagePath){
-    path = imagePath;
-    parking = pSpot;
+Level::Level(SDL_Renderer* r, int level, parkingSpot* pSpot, string levelPath, string carPath, SDL_Rect carSrc, SDL_Rect carMover){
+    path = levelPath;
+    parking = new parkingSpot(*pSpot);
     levelNumber = level;
     renderer = r;
     image = loadLevel();
+    playerCar = new Car(renderer, carPath, carSrc, carMover);
 
 };
 // void Level::loadCoins(){
@@ -20,10 +21,11 @@ void Level::insertObstacle(SDL_Renderer* r, string pth, SDL_Rect rct, SDL_Rect m
 
 
 void Level::drawLevel(){
+    SDL_RenderCopy(renderer, image, NULL, NULL);
     for(int i = 0;  i < obstacles.size(); i++){
         obstacles[i]->drawObstacle();
     }
-    SDL_RenderCopy(renderer, image, NULL, NULL);
+    playerCar->draw();
 }
 
 SDL_Texture* Level::loadLevel(){

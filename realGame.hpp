@@ -1,3 +1,4 @@
+#pragma once
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include <iostream>
@@ -22,12 +23,10 @@ class realGame{
         void createLevel1();
         void createLevel2();
         void createLevel3();
+        void updateCarPos();
     public:
         realGame(SDL_Renderer*);
-        // void init();
         void drawCurrent();
         void updateCurrentState(SDL_Event&);
-        void drawItems();
-        void handleKeyPress(SDL_Keycode*);
-        void handleKeyRelease(SDL_Keycode*);
+        // void drawItems();
 };
