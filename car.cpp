@@ -39,7 +39,7 @@ void Car::turnRight() {
 }
 void Car::releaseAccelerate() {
     while(velocity>0){
-        velocity -= 5;
+        velocity -= acceleration;
         if (velocity< 0){
             velocity = 0;
             break;
@@ -47,9 +47,10 @@ void Car::releaseAccelerate() {
         draw();
     }
 }
+
 void Car::releaseDeceleration() {
     while(velocity<0){
-        velocity += 5;
+        velocity += acceleration;
         draw();
         if (velocity> 0){
             velocity = 0;

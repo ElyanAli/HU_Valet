@@ -144,11 +144,9 @@ void Game::run( )
 		//***********************draw the objects here********************
 		parkingGame->drawCurrent();
 		// drawObjects(gRenderer, assets);
-
 		//****************************************************************
     	SDL_RenderPresent(gRenderer); //displays the updated renderer
-
-	    // SDL_Delay(50);	//causes sdl engine to delay for specified miliseconds
+	    parkingGame->delay();	//causes sdl engine to delay for specified miliseconds
 	}
 }
 			

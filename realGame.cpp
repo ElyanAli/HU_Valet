@@ -65,5 +65,9 @@ void realGame::drawCurrent(){
     }
 };
 
-
+void realGame::delay(){
+    if (level>=0){
+        SDL_Delay(50);
+    }
+}
 

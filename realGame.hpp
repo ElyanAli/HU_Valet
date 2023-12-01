@@ -19,7 +19,6 @@ class realGame{
         vector<Level*> levels;
         welcomeScreen* wscreen = nullptr;
         keyboardHandler keyHandler;
-        
         void createLevel1();
         void createLevel2();
         void createLevel3();
@@ -28,5 +27,6 @@ class realGame{
         realGame(SDL_Renderer*);
         void drawCurrent();
         void updateCurrentState(SDL_Event&);
+        void delay();
         // void drawItems();
 };
