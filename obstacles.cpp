@@ -13,3 +13,4 @@ std::string Obstacle::getPath(){
     return path;
 }
 
+

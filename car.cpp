@@ -5,7 +5,7 @@ Car::Car (SDL_Renderer* Rndr, string path, SDL_Rect sRect, SDL_Rect mRect) : Obj
     cout<<path<<endl;
     image = loadImage(path);
     angle = 270;
-    center ={21,37};
+    center ={moverRect.w/2,moverRect.h/2};
 }
 
 void Car::draw() {
@@ -70,7 +70,7 @@ void Car::releaseDeceleration() {
 }
 
 int Car::getAngle() const{
-    return angle*(M_PI/180);
+    return angle;
 }
 
 void Car::hardSetCarPos(float overlap){

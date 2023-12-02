@@ -25,6 +25,7 @@ class realGame{
         void createLevel2();
         void createLevel3();
         void updateCarPos();
+        bool collided = false;
         CollisionManager cM;
     public:
         realGame(SDL_Renderer*);

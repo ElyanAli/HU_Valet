@@ -5,6 +5,7 @@
 #include "objects.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include "CollisionManager.hpp"
 using namespace std;
 
 class Car : public Objects { //inherit from object
@@ -34,6 +35,7 @@ class Car : public Objects { //inherit from object
         void releaseDeceleration();
         int getAngle() const;
         void hardSetCarPos(float);
+        friend class CollisionManager;
         
 
 };
