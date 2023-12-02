@@ -9,3 +9,7 @@ void Obstacle::drawObstacle(){
     SDL_RenderCopy(renderer, image, &srcRect, &moverRect);
 }
 
+std::string Obstacle::getPath(){
+    return path;
+}
+

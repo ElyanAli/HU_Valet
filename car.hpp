@@ -11,16 +11,17 @@ class Car : public Objects { //inherit from object
     private:
         // float acceleration;
         
-        const double acceleration = 3;
-        const double ANGLE_CHANGE = 5;
+        const int acceleration = 3;
+        const int ANGLE_CHANGE = 5;
         int fuel;
         int collisionState;
-        double angle;
+        int angle;
         SDL_Point center;
         double theta, delta;
         const double DELTA_T = 1.0;
         int velocity = 0;
-
+        void setAngle();
+        void moveCar();
     public:
         
         Car (SDL_Renderer* Rndr, string path, SDL_Rect sRect, SDL_Rect mRect);
@@ -31,5 +32,8 @@ class Car : public Objects { //inherit from object
         void turnRight();
         void releaseAccelerate();
         void releaseDeceleration();
+        int getAngle() const;
+        void hardSetCarPos(float);
+        
 
 };

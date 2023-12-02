@@ -11,7 +11,6 @@ class Level{
     private:
         
         int levelNumber;
-        vector<Obstacle *> obstacles;
         // vector<Coins> coins;
         parkingSpot* parking;
         SDL_Renderer* renderer;
@@ -19,6 +18,7 @@ class Level{
         SDL_Texture* image;
         SDL_Texture* loadLevel();
     public:
+        vector<Obstacle *> obstacles;
         Car* playerCar = nullptr;
         Level(SDL_Renderer*, int, parkingSpot*, string, string, SDL_Rect, SDL_Rect);
         void loadObstacles();

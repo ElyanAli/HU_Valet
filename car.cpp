@@ -4,26 +4,25 @@
 Car::Car (SDL_Renderer* Rndr, string path, SDL_Rect sRect, SDL_Rect mRect) : Objects(Rndr, sRect, mRect) {
     cout<<path<<endl;
     image = loadImage(path);
-    cout<<image;
-    angle = 0.0;
-    theta = 0;
-    delta = 0;
+    angle = 270;
     center ={21,37};
 }
 
 void Car::draw() {
-    moverRect.x += static_cast<int>(velocity * sin(angle*(M_PI/180)));
-    moverRect.y -= static_cast<int>(velocity * cos(angle*(M_PI/180)));
+    moveCar();
     SDL_RenderCopyEx(renderer, image, &srcRect, &moverRect, angle, &center, SDL_FLIP_NONE);
     // cout<<angle<<endl;
 }
 
-
+void Car::moveCar(){
+    moverRect.x += static_cast<int>(velocity * sin(angle*(M_PI/180)));
+    moverRect.y -= static_cast<int>(velocity * cos(angle*(M_PI/180)));
+}
 void Car::accelerate() {
     if (velocity <= 15){
         velocity += acceleration;
-        
     }
+    std::cout<<velocity<<std::endl;
 }
 void Car::decelerate() {
     if (velocity >= -15){
@@ -31,10 +30,22 @@ void Car::decelerate() {
     }
     
 }
+
+void Car::setAngle(){
+    if (angle< (-359)){
+        angle += 360;
+    }else if (angle>359){
+        angle +=360;
+    }
+}
+
+
 void Car::turnLeft() {
+    setAngle();
     angle -= ANGLE_CHANGE;
 }
 void Car::turnRight() {
+    setAngle();
     angle += ANGLE_CHANGE;
 }
 void Car::releaseAccelerate() {
@@ -44,7 +55,6 @@ void Car::releaseAccelerate() {
             velocity = 0;
             break;
         }
-        draw();
     }
 }
 
@@ -58,3 +68,12 @@ void Car::releaseDeceleration() {
         }
     }
 }
+
+int Car::getAngle() const{
+    return angle*(M_PI/180);
+}
+
+void Car::hardSetCarPos(float overlap){
+    velocity -= velocity;
+}
+

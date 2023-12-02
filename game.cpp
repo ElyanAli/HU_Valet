@@ -138,7 +138,7 @@ void Game::run( )
 				parkingGame->updateCurrentState(e);
 			}  
         }
-
+		parkingGame->updateCurrentState(e);
 		SDL_RenderClear(gRenderer); //removes everything from renderer
 		
 		//***********************draw the objects here********************

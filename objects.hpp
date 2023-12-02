@@ -16,8 +16,7 @@ class Objects{
         Objects();
         virtual void draw();
         Objects(SDL_Renderer*, SDL_Rect, SDL_Rect );
-        int getPositionX();
-        int getPositionY();
-        SDL_Rect* getSrcRect();
+        SDL_Rect getMoverRect() const;
         void setImage(string img);
+        SDL_Point getPosition();
 };

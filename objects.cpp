@@ -7,19 +7,12 @@ Objects::Objects(){
 Objects::Objects(SDL_Renderer* rndr, SDL_Rect rect, SDL_Rect mrect){
     srcRect = rect;
     renderer = rndr;
-    moverRect = rect;
+    moverRect = mrect;
 }
 
-int Objects::getPositionX(){
-    return srcRect.x;
-}
 
-int Objects::getPositionY(){
-    return srcRect.y;
-}
-
-SDL_Rect* Objects::getSrcRect(){
-    return &srcRect;
+SDL_Rect Objects::getMoverRect() const{
+    return moverRect;
 }
 
 void Objects::setImage(string img){
@@ -62,4 +55,8 @@ SDL_Texture* Objects::loadImage(string path) {
 
 void Objects::draw(){
     SDL_RenderCopy(renderer, image, &srcRect, &moverRect);
+}
+
+SDL_Point Objects::getPosition(){
+	return {moverRect.x , moverRect.y};
 }

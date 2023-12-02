@@ -10,7 +10,8 @@
 #include "level.hpp"
 #include "welcomeScreen.hpp"
 #include "keyboardHandler.hpp"
-
+#include "CollisionManager.hpp"
+#include "obstacles.hpp"
 
 class realGame{
     private:
@@ -19,10 +20,12 @@ class realGame{
         vector<Level*> levels;
         welcomeScreen* wscreen = nullptr;
         keyboardHandler keyHandler;
+        bool levelComplete;
         void createLevel1();
         void createLevel2();
         void createLevel3();
         void updateCarPos();
+        CollisionManager cM;
     public:
         realGame(SDL_Renderer*);
         void drawCurrent();
