@@ -18,21 +18,21 @@ void realGame::createLevel1(){
     level1->insertObstacle(gRenderer, "./images/obstacle1.png", {671, 629, 207, 49}, {692, 362, 207, 30});
     level1->insertObstacle(gRenderer, "./images/obstacle1.png", {0, 945, 1000, 98}, {0, 537, 1000, 63});
     // // set car obstacles in slots on top
-    level1->insertObstacle(gRenderer, "./images/car1_purple.png", {0, 0, 42, 74}, {390, 72, 42, 60});
-    level1->insertObstacle(gRenderer, "./images/car1_orange.png", {0, 0, 42, 74}, {245, 72, 42, 60});
-    level1->insertObstacle(gRenderer, "./images/car1_purple.png", {0, 0, 42, 74}, {170, 72, 42, 60});
-    level1->insertObstacle(gRenderer, "./images/car1_yellow.png", {0, 0, 42, 74}, {545, 72, 42, 60});
-    level1->insertObstacle(gRenderer, "./images/car1_yellow.png", {0, 0, 42, 74}, {620, 72, 42, 60});
-    level1->insertObstacle(gRenderer, "./images/car1_yellow.png", {0, 0, 42, 74}, {695, 72, 42, 60});
-    level1->insertObstacle(gRenderer, "./images/car1_red.png", {0, 0, 42, 74}, {840, 72, 42, 60});
+    level1->insertObstacle(gRenderer, "./images/car1_purple.png", {0, 0, 42, 74}, {390, 72, 34, 50});
+    level1->insertObstacle(gRenderer, "./images/car1_orange.png", {0, 0, 42, 74}, {245, 72, 34, 50});
+    level1->insertObstacle(gRenderer, "./images/car1_purple.png", {0, 0, 42, 74}, {170, 72, 34, 50});
+    level1->insertObstacle(gRenderer, "./images/car1_yellow.png", {0, 0, 42, 74}, {545, 72, 34, 50});
+    level1->insertObstacle(gRenderer, "./images/car1_yellow.png", {0, 0, 42, 74}, {620, 72, 34, 50});
+    level1->insertObstacle(gRenderer, "./images/car1_yellow.png", {0, 0, 42, 74}, {695, 72, 34, 50});
+    level1->insertObstacle(gRenderer, "./images/car1_red.png", {0, 0, 42, 74}, {840, 72, 34, 50});
     // // set car obstacles in slots at bottom
-    level1->insertObstacle(gRenderer, "./images/car1_purple_rt.png", {0, 0, 42, 74}, {315, 470, 42, 60});
-    level1->insertObstacle(gRenderer, "./images/car1_orange_rt.png", {0, 0, 42, 74}, {95, 470, 42, 60});
-    level1->insertObstacle(gRenderer, "./images/car1_purple_rt.png", {0, 0, 42, 74}, {170, 470, 42, 60});
-    level1->insertObstacle(gRenderer, "./images/car1_yellow_rt.png", {0, 0, 42, 74}, {470, 470, 42, 60});
-    level1->insertObstacle(gRenderer, "./images/car1_yellow_rt.png", {0, 0, 42, 74}, {620, 470, 42, 60});
-    level1->insertObstacle(gRenderer, "./images/car1_yellow_rt.png", {0, 0, 42, 74}, {545, 470, 42, 60});
-    level1->insertObstacle(gRenderer, "./images/car1_red_rt.png", {0, 0, 42, 74}, {840, 470, 42, 60});
+    level1->insertObstacle(gRenderer, "./images/car1_purple_rt.png", {0, 0, 42, 74}, {315, 470, 34, 50});
+    level1->insertObstacle(gRenderer, "./images/car1_orange_rt.png", {0, 0, 42, 74}, {95, 470, 34, 50});
+    level1->insertObstacle(gRenderer, "./images/car1_purple_rt.png", {0, 0, 42, 74}, {170, 470, 34, 50});
+    level1->insertObstacle(gRenderer, "./images/car1_yellow_rt.png", {0, 0, 42, 74}, {470, 470, 34, 50});
+    level1->insertObstacle(gRenderer, "./images/car1_yellow_rt.png", {0, 0, 42, 74}, {620, 470, 34, 50});
+    level1->insertObstacle(gRenderer, "./images/car1_yellow_rt.png", {0, 0, 42, 74}, {545, 470, 34, 50});
+    level1->insertObstacle(gRenderer, "./images/car1_red_rt.png", {0, 0, 42, 74}, {840, 470, 34, 50});
     levelComplete = false;
     levels.push_back(level1);
 }
@@ -59,7 +59,7 @@ void realGame::updateCurrentState(SDL_Event& event){
         for (int i = 0; i < levels[level]->obstacles.size(); i++){
             Obstacle* thisObstacle = (levels[level]->obstacles[i]);
             // cout<<cM.checkCollision(thisCar, thisObstacle)<<endl;
-            if(cM.checkCollision(thisCar, thisObstacle)){
+            if(cM.checkCollisionObs(thisCar, thisObstacle)){
                 std::cout<<"collided with"<<thisObstacle->getPath()<<"\n";
                 cM.resolveCollision(thisCar, prevCarRect);
             };
