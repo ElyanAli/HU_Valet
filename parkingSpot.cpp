@@ -1,17 +1,10 @@
-#include "parkingSpot.hpp"
+#include "ParkingSpot.hpp"
 
-parkingSpot::parkingSpot(int xS, int xE, int yS, int yE){
-    xStart = xS;
-    xEnd = xE;
-    yStart = yS;
-    yEnd = yE;
+ParkingSpot::ParkingSpot(SDL_Renderer* rndr, SDL_Rect srct, SDL_Rect mrct, string pth): Objects(rndr, srct, mrct){
+    path = pth;
+    image = loadImage(path);
 }
 
-bool parkingSpot::checkParking(Car& thisCar){
-    /*  
-        get the starting and ending coordinates of car and compare them 
-        with the starting and ending coordinates of the parking, 
-        if they match return true, else return false 
-    */
-   return false;
+void ParkingSpot::draw(){
+    SDL_RenderCopy(renderer, image, &srcRect, &moverRect);
 }

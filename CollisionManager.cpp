@@ -68,45 +68,73 @@ bool CollisionManager::checkCollisionObs(Car* car, Objects* object) {
     vector<vector<float>> obstacleCorners = getObstacleBoxCorners(object);
     // Check if any car corner lies within the obstacle
     for (const auto& carCorner : carCorners) {
-        // Minimum distance to obstacle boundary from current car corner
-        float minDistance = FLT_MAX;
-        // check for screen corners
-        if (carCorner[0]>=980|| carCorner[0]<=20|| carCorner[1]>=590|| carCorner[1]<=0){
-          return true; //collided with screen boundary
-        }
-        // Loop through obstacle corners
-        for (const auto& obstacleCorner : obstacleCorners) {
-        // Calculate distance between car corner and obstacle corner
+      // Minimum distance to obstacle boundary from current car corner
+      float minDistance = FLT_MAX;
+      // check for screen corners
+      if (carCorner[0]>=980|| carCorner[0]<=20|| carCorner[1]>=590|| carCorner[1]<=0){
+        return true; //collided with screen boundary
+      }
+      // Loop through obstacle corners
+      for (const auto& obstacleCorner : obstacleCorners) {
+      // Calculate distance between car corner and obstacle corner
         float distance = sqrt(pow(carCorner[0] - obstacleCorner[0], 2) + pow(carCorner[1] - obstacleCorner[1], 2));
 
         // Update minimum distance if closer
         if (distance < minDistance) {
             minDistance = distance;
-        }
-        }
+          }
+      }
 
-        // Check if minimum distance is less than car's collision radius (adjust threshold)
-        if (minDistance < 5) {
+      // Check if minimum distance is less than car's collision radius (adjust threshold)
+      if (minDistance < 1) {
         return true; // Collision detected!
-        }
-
-
-  // Check if any obstacle corner lies within the car
-  // Implement logic to calculate the rotated bounding box for the obstacle
-//   // based on its position, angle, width, and height
-
-//   // Similar loop as above to check obstacle corners against car boundaries
-//   for (const auto& corner : obstacleRotatedCorners) {
-//     if (corner[0] >= carBox.x && corner[0] <= carBox.x + carBox.w &&
-//         corner[1] >= carBox.y && corner[1] <= carBox.y + carBox.h) {
-//       intersectsCenter = true;
-//       break;
-//     }
-//   }
-
+      }
     }
     return intersectsCenter;
 }
+
+bool CollisionManager::checkParking(Car* car, ParkingSpot* parkingSpace) {
+  // Boundary check with tolerance
+  SDL_Rect carBox = car->getMoverRect();
+  SDL_Rect parkingBox = parkingSpace->getMoverRect();
+
+
+  if (!SDL_HasIntersection(&carBox, &parkingBox)) {
+    return false; // Car not within parking space with tolerance
+  }
+
+  // Center alignment check
+  float carCenterX = car->getPosition().x + car->getMoverRect().w / 2.0f;
+  float carCenterY = car->getPosition().y + car->getMoverRect().h / 2.0f;
+  float parkingCenterX = parkingSpace->getPosition().x + parkingSpace->getMoverRect().w / 2.0f;
+  float parkingCenterY = parkingSpace->getPosition().y + parkingSpace->getMoverRect().h / 2.0f;
+  float distance = sqrt(pow(carCenterX - parkingCenterX, 2) + pow(carCenterY - parkingCenterY, 2));
+
+  float alignmentThreshold = parkingBox.w * 0.1f; // 10% threshold
+  return distance < alignmentThreshold; // Car center within alignment threshold
+}
+
+
+bool CollisionManager::checkCollisionCoin(Car* car, Coin* coin) {
+  if (coin->collected == false){
+    SDL_Rect carBox = car->getMoverRect();
+    SDL_Rect coinBox = coin->getMoverRect();
+    vector<vector<float>> carCorners = getCarCoordinates(car);
+    bool intersects = SDL_HasIntersection(&carBox, &coinBox);
+    // std::cout<<"checking for collision"<<"\n";
+    for (const auto& corner : carCorners) {
+      if (corner[0] >= coinBox.x && corner[0] <= coinBox.x + coinBox.w &&
+          corner[1] >= coinBox.y && corner[1] <= coinBox.y + coinBox.h) {
+        intersects = true;
+        break;
+      }
+    }
+    // std::cout<<"checked for collision"<<"\n";
+    return intersects;
+  }
+  return false;
+}
+
 vector<vector<float>> CollisionManager::getObstacleBoxCorners(Objects* obstacle) {
   SDL_Rect objectBox = obstacle->getMoverRect();
 
@@ -122,6 +150,10 @@ void CollisionManager::resolveCollision(Car* car, SDL_Rect prevPos){
     car->moverRect = prevPos;
     car->velocity -= car->velocity;
 }
+
+void CollisionManager::resolveCoinCollision(Coin* thisCoin){
+    thisCoin->collected = true;
+};
 
 vector<vector<float>> CollisionManager::getCarCoordinates(Car* car) {
   SDL_Rect rect = car->getMoverRect();
@@ -151,38 +183,4 @@ vector<vector<float>> CollisionManager::getCarCoordinates(Car* car) {
   corners.push_back({centerX + blOffsetX, centerY + blOffsetY});
   return corners;
 }
-
-
-// vector<vector<float>> CollisionManager::getCarCoordinates(Car* car){
-//     SDL_Rect rect = car->getMoverRect();
-//     float angleInRadians = car->getAngle();
-
-//     float centerX = rect.x + rect.w / 2;
-//     float centerY = rect.y + rect.h / 2;
-//     // float angleInRadians = angle * M_PI / 180;
-
-//     float topLeftOffsetX = 50 * cos(angleInRadians);
-//     float topLeftOffsetY = 50 * sin(angleInRadians);
-//     float topLeftX = centerX + topLeftOffsetX;
-//     float topLeftY = centerY + topLeftOffsetY;
-
-//     float topRightOffsetX = 50 * cos(angleInRadians + 90.0f);
-//     float topRightOffsetY = 50 * sin(angleInRadians + 90.0f);
-//     float topRightX = centerX + topRightOffsetX;
-//     float topRightY = centerY + topRightOffsetY;
-
-//     float bottomRightOffsetX = 50 * cos(angleInRadians + 180.0f);
-//     float bottomRightOffsetY = 50 * sin(angleInRadians + 180.0f);
-//     float bottomRightX = centerX + bottomRightOffsetX;
-//     float bottomRightY = centerY + bottomRightOffsetY;
-
-//     float bottomLeftOffsetX = 50 * cos(angleInRadians + 270.0f);
-//     float bottomLeftOffsetY = 50 * sin(angleInRadians + 270.0f);
-//     float bottomLeftX = centerX + bottomLeftOffsetX;
-//     float bottomLeftY = centerY + bottomLeftOffsetY;
-
-//     vector<vector<float>> coordinates = {{topLeftX, topLeftY}, {topRightX, topRightY}, {bottomLeftX, bottomLeftY},{bottomRightX, bottomRightY}};
-//     return coordinates;
-// }
-
 

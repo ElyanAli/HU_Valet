@@ -1,17 +1,24 @@
+#pragma once
 #include <iostream>
 #include "objects.hpp"
 #include "car.hpp"
+#include <string>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+
 using namespace std;
 
-class parkingSpot{
+
+
+class ParkingSpot:public Objects{
     private:
         bool parked;
-        int xStart;
-        int xEnd;
-        int yStart;
-        int yEnd;
+        string path;
+        SDL_Texture* image;
 
     public:
-        parkingSpot(int, int, int, int);
-        bool checkParking(Car&);
+        ParkingSpot(SDL_Renderer*, SDL_Rect, SDL_Rect, string);
+        void draw();
+
 };
+
