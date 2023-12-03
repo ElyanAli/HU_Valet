@@ -46,7 +46,7 @@ void realGame::createLevel1(){
     level1->insertCoin({240, 460, 36, 36});
     level1->insertCoin({390, 460, 36, 36});
     level1->insertCoin({675, 460, 36, 36});
-
+    levelBoundaries = {20, 980, 0, 600};
 
 
 
@@ -55,7 +55,57 @@ void realGame::createLevel1(){
     levels.push_back(level1);
 }
 
-void realGame::createLevel2(){}
+void realGame::createLevel2(){
+    ParkingSpot* levelParking = new ParkingSpot(gRenderer, {0, 0, 81, 139}, {288, 38, 29, 50}, "./images/parking.png");
+    Level* level2 = new Level(gRenderer, 2, levelParking, "./images/level2.png", "./images/car_green.png", {0, 0, 113, 198}, {536, 143, 25, 45});
+    levels.push_back(level2);
+    levelBoundaries = {132, 868, 0, 535};
+    // insert obstacles
+    level2->insertObstacle("./images/obstacle2.png", {0, 0, 473, 276}, {500, 188, 262, 175});
+    level2->insertObstacle("./images/obstacle3.png", {0, 0, 519, 283}, {180, 188, 273, 187});
+    level2->insertObstacle("./images/obstacle4.png", {0, 104, 1038, 26}, {143, 496, 577, 19});
+    level2->insertObstacle("./images/obstacle4.png", {0, 0, 31, 105}, {143, 440, 20, 57});
+    level2->insertObstacle("./images/obstacle4.png", {1010, 0, 31, 105}, {700, 440, 20, 57});
+    level2->insertObstacle("./images/obstacle5.png", {0, 0, 1053, 33}, {362, 0, 498, 24});
+    level2->insertObstacle("./images/obstacle5.png", {1021, 33, 31, 656}, {843, 21, 17, 430});
+    level2->insertObstacle("./images/obstacle6.png", {0, 4, 94, 98}, {143, 12, 81, 89});
+    level2->insertObstacle("./images/obstacle7.png", {0, 0, 78, 78}, {802, 468, 52, 52});
+    // insert parked cars as obstacles at top;
+    level2->insertObstacle("./images/car_red.png", {0, 0, 101, 189}, {256, 41, 25, 45});
+    level2->insertObstacle("./images/car_blue.png", {0, 0, 114, 211}, {322, 38, 25, 45});
+    level2->insertObstacle("./images/car_red_rt.png", {0, 0, 101, 189}, {356, 39, 25, 45});
+    level2->insertObstacle("./images/car_blue_rt.png", {0, 0, 114, 211}, {492, 42, 25, 45});
+    level2->insertObstacle("./images/car_red.png", {0, 0, 101, 189}, {592, 41, 25, 45});
+    level2->insertObstacle("./images/car_green_rt.png", {0, 0, 113, 198}, {626, 41, 25, 45});
+    level2->insertObstacle("./images/car_blue.png", {0, 0, 114, 211}, {693, 41, 25, 45});
+    // insert parked cars as obstacles at bottom;
+    level2->insertObstacle("./images/car_green.png", {0, 0, 113, 198}, {165, 446, 25, 45});
+    level2->insertObstacle("./images/car_blue.png", {0, 0, 114, 211}, {231, 446, 25, 45});
+    level2->insertObstacle("./images/car_red_rt.png", {0, 0, 101, 189}, {265, 446, 25, 45});
+    level2->insertObstacle("./images/car_blue_rt.png", {0, 0, 114, 211}, {466, 446, 25, 45});
+    level2->insertObstacle("./images/car_red.png", {0, 0, 101, 189}, {535, 446, 25, 45});
+    level2->insertObstacle("./images/car_blue.png",{0, 0, 114, 211}, {569, 446, 25, 45});
+    level2->insertObstacle("./images/car_blue_rt.png", {0, 0, 114, 211}, {667, 446, 25, 45});
+    // insert moving cars on the road
+    level2->insertObstacle("./images/ambulance90.png", {0, 1, 129, 59}, {285, 143, 74, 33});
+    level2->insertObstacle("./images/ambulance.png", {0, 0, 59, 128}, {459, 289, 33, 74});
+    level2->insertObstacle("./images/police90.png", {0, 0, 126, 56}, {597, 331, 69, 32});
+    level2->insertObstacle("./images/truck90.png", {0, 0, 127, 62}, {566, 97, 65, 32});
+    level2->insertObstacle("./images/truck.png", {0, 0, 62, 127}, {746, 426, 32, 65});
+
+    // insert coins
+    level2->insertCoin({496, 451, 36, 36});
+    level2->insertCoin({611, 451, 36, 36});
+    level2->insertCoin({311, 451, 36, 36});
+    level2->insertCoin({778, 271, 36, 36});
+    level2->insertCoin({733, 48, 36, 36});
+    level2->insertCoin({537, 48, 36, 36});
+    level2->insertCoin({432, 48, 36, 36});
+    level2->insertCoin({166, 124, 36, 36});
+    level2->insertCoin({459, 226, 36, 36});
+
+
+}
 
 void realGame::updateCurrentState(SDL_Event& event){
     myMouse->update();
@@ -77,7 +127,7 @@ void realGame::updateCurrentState(SDL_Event& event){
         for (int i = 0; i < levels[level]->obstacles.size(); i++){
             Obstacle* thisObstacle = (levels[level]->obstacles[i]);
             // cout<<cM.checkCollision(thisCar, thisObstacle)<<endl;
-            if(cM.checkCollisionObs(thisCar, thisObstacle)){
+            if(cM.checkCollisionObs(thisCar, thisObstacle, levelBoundaries)){
                 std::cout<<"collided with"<<thisObstacle->getPath()<<"\n";
                 cM.resolveCollision(thisCar, prevCarRect);
             };
@@ -100,7 +150,12 @@ void realGame::updateCurrentState(SDL_Event& event){
             if (event.type == SDL_MOUSEBUTTONUP){
                 if (done->update(*myMouse)){
                     level+=1;
-                    createLevel2();
+                    if (level == 1){
+                        createLevel2();
+                    }else{
+                        level = -1;
+                        levels = {};
+                    }
                 };
             }
         }

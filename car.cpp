@@ -19,13 +19,13 @@ void Car::moveCar(){
     moverRect.y -= static_cast<int>(velocity * cos(angle*(M_PI/180)));
 }
 void Car::accelerate() {
-    if (velocity <= 10){
+    if (velocity < 6){
         velocity += acceleration;
     }
-    std::cout<<velocity<<std::endl;
+    // std::cout<<velocity<<std::endl;
 }
 void Car::decelerate() {
-    if (velocity >= -10){
+    if (velocity > -6){
         velocity -= acceleration;
     }
     

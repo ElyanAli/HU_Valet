@@ -55,7 +55,7 @@
 // }
 
 
-bool CollisionManager::checkCollisionObs(Car* car, Objects* object) {
+bool CollisionManager::checkCollisionObs(Car* car, Objects* object, vector<int> levelBoundaries) {
     SDL_Rect carBox = car->getMoverRect();
     SDL_Rect objectBox = object->getMoverRect();
 
@@ -71,7 +71,7 @@ bool CollisionManager::checkCollisionObs(Car* car, Objects* object) {
       // Minimum distance to obstacle boundary from current car corner
       float minDistance = FLT_MAX;
       // check for screen corners
-      if (carCorner[0]>=980|| carCorner[0]<=20|| carCorner[1]>=590|| carCorner[1]<=0){
+      if (carCorner[0]>=levelBoundaries[1]|| carCorner[0]<=levelBoundaries[0]|| carCorner[1]>=levelBoundaries[3]|| carCorner[1]<=levelBoundaries[2]){
         return true; //collided with screen boundary
       }
       // Loop through obstacle corners
@@ -86,7 +86,7 @@ bool CollisionManager::checkCollisionObs(Car* car, Objects* object) {
       }
 
       // Check if minimum distance is less than car's collision radius (adjust threshold)
-      if (minDistance < 1) {
+      if (minDistance < 0.5) {
         return true; // Collision detected!
       }
     }

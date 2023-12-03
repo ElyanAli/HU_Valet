@@ -26,6 +26,7 @@ class realGame{
         levelButton* done;
         Mouse* myMouse;
         bool levelComplete;
+        vector<int> levelBoundaries;
         void createLevel1();
         void createLevel2();
         void createLevel3();

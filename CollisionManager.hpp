@@ -19,7 +19,7 @@ class CollisionManager{
         vector<vector<float>> getObstacleBoxCorners(Objects* obstacle);
         vector<vector<float>> getCarCoordinates(Car* car);
     public:
-        bool checkCollisionObs( Car* car, Objects* object);
+        bool checkCollisionObs( Car* car, Objects* object, vector<int>);
         // SDL_Rect calculate_rotated_bounding_box(Car* car);
         void resolveCollision(Car*, SDL_Rect);
         bool checkCollisionCoin(Car* car, Coin* coin);
