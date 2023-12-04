@@ -20,6 +20,10 @@ void Objects::setImage(string img){
     image = loadImage(imgstr);
 };
 
+float Objects::getAngle(){
+	return 0;
+}
+
 // SDL_Texture* Objects::loadImage(string path){
 //     SDL_Surface *imageSurface = SDL_LoadBMP(path.c_str());
 //     SDL_Texture *imageTexture = SDL_CreateTextureFromSurface(renderer, imageSurface);

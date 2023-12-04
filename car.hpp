@@ -8,6 +8,8 @@
 #include "CollisionManager.hpp"
 using namespace std;
 
+
+
 class Car : public Objects { //inherit from object
     private:
         // float acceleration;
@@ -33,8 +35,8 @@ class Car : public Objects { //inherit from object
         void turnRight();
         void releaseAccelerate();
         void releaseDeceleration();
-        int getAngle() const;
         void hardSetCarPos(float);
+        float getAngle();
         friend class CollisionManager;
         
 

@@ -69,7 +69,7 @@ void Car::releaseDeceleration() {
     }
 }
 
-int Car::getAngle() const{
+float Car::getAngle(){
     return angle;
 }
 

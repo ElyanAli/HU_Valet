@@ -3,7 +3,7 @@
 realGame::realGame(SDL_Renderer* r): gRenderer(r){
     wscreen = new welcomeScreen(gRenderer);
     done = new levelButton(gRenderer, {0,0, 52, 54}, {800, 50, 52, 54}, "./images/done.png");
-    myMouse = new Mouse(gRenderer, {0, 0, 49, 50}, {1000, 600, 49, 50});
+    myMouse = new Mouse(r, {0, 0, 457, 531}, {1000, 600, 50, 60});
 }
 void realGame::createLevel1(){
     ParkingSpot* levelParking = new ParkingSpot(gRenderer, {0, 0, 81, 139}, {754, 445, 70, 90 }, "./images/parking.png");
@@ -62,7 +62,7 @@ void realGame::createLevel2(){
     levelBoundaries = {132, 868, 0, 535};
     // insert obstacles
     level2->insertObstacle("./images/obstacle2.png", {0, 0, 473, 276}, {500, 188, 262, 175});
-    level2->insertObstacle("./images/obstacle3.png", {0, 0, 519, 283}, {180, 188, 273, 187});
+    level2->insertObstacle("./images/obstacle3.png", {0, 0, 519, 283}, {180, 188, 250, 187});
     level2->insertObstacle("./images/obstacle4.png", {0, 104, 1038, 26}, {143, 496, 577, 19});
     level2->insertObstacle("./images/obstacle4.png", {0, 0, 31, 105}, {143, 440, 20, 57});
     level2->insertObstacle("./images/obstacle4.png", {1010, 0, 31, 105}, {700, 440, 20, 57});
@@ -127,8 +127,8 @@ void realGame::updateCurrentState(SDL_Event& event){
         for (int i = 0; i < levels[level]->obstacles.size(); i++){
             Obstacle* thisObstacle = (levels[level]->obstacles[i]);
             // cout<<cM.checkCollision(thisCar, thisObstacle)<<endl;
-            if(cM.checkCollisionObs(thisCar, thisObstacle, levelBoundaries)){
-                std::cout<<"collided with"<<thisObstacle->getPath()<<"\n";
+            if(cM.checkCollisionObs(thisCar, thisObstacle)){
+                // std::cout<<"collided with"<<thisObstacle->getPath()<<"\n";
                 cM.resolveCollision(thisCar, prevCarRect);
             };
         }

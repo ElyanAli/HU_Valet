@@ -19,4 +19,5 @@ class Objects{
         SDL_Rect getMoverRect() const;
         void setImage(string img);
         SDL_Point getPosition();
+        virtual float getAngle();
 };

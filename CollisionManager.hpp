@@ -2,6 +2,7 @@
 #include <iostream>
 #include "car.hpp"
 #include "objects.hpp"
+#include "obstacles.hpp"
 #include "coin.hpp"
 #include "ParkingSpot.hpp"
 #include <SDL2/SDL.h>
@@ -16,13 +17,23 @@ class ParkingSpot;
 
 class CollisionManager{
     private:
-        vector<vector<float>> getObstacleBoxCorners(Objects* obstacle);
-        vector<vector<float>> getCarCoordinates(Car* car);
+        pair<float, float> projectObjectOnAxis(Objects* obj, pair<float, float> axis);
+        bool overlap(pair<float, float> interval1, pair<float, float> interval2);
+        vector<vector<float>> getVertices(Objects* obj);
+        vector<vector<float>> getCarVertices(Objects* obj);
+        vector<vector<float>> getObstacleVertices(Objects* obj);
+
     public:
-        bool checkCollisionObs( Car* car, Objects* object, vector<int>);
-        // SDL_Rect calculate_rotated_bounding_box(Car* car);
-        void resolveCollision(Car*, SDL_Rect);
+        bool checkCollisionObs( Car* car, Objects* object);
         bool checkCollisionCoin(Car* car, Coin* coin);
         void resolveCoinCollision(Coin* thisCoin);
         bool checkParking( Car*, ParkingSpot*);
+        void resolveCollision(Car*, SDL_Rect);
+
+        
 };
+
+
+
+
+
