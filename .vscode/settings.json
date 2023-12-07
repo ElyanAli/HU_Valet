@@ -63,7 +63,13 @@
         "unordered_map": "cpp",
         "unordered_set": "cpp",
         "variant": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "*.tcc": "cpp",
+        "deque": "cpp",
+        "memory_resource": "cpp",
+        "utility": "cpp",
+        "fstream": "cpp",
+        "cinttypes": "cpp"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }

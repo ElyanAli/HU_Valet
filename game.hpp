@@ -1,8 +1,8 @@
 #pragma once
-#include <SDL2/SDL.h> //for Meesum
-#include <SDL2/SDL_image.h> //For Meesum
-// #include <SDL.h>
-// #include <SDL_image.h>
+// #include <SDL2/SDL.h> //for Meesum
+// #include <SDL2/SDL_image.h> //For Meesum
+#include <SDL.h>
+#include <SDL_image.h>
 #include <stdio.h>
 #include <iostream>
 #include <string>

@@ -1,6 +1,8 @@
 #pragma once
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_image.h"
+// #include "SDL2/SDL.h"
+// #include "SDL2/SDL_image.h"
+#include <SDL.h>
+#include <SDL_image.h>
 #include <iostream>
 #include <stdio.h>
 #include <string>
@@ -15,6 +17,7 @@
 #include "obstacles.hpp"
 #include "coin.hpp"
 #include "mouse.hpp"
+#include "digits.hpp"
 
 class realGame{
     private:
@@ -33,6 +36,9 @@ class realGame{
         void updateCarPos();
         bool collided = false;
         CollisionManager cM;
+        vector<Digits*> score;
+        int scoreCount = 0;
+        
     public:
         realGame(SDL_Renderer*);
         void drawCurrent();

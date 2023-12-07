@@ -2,7 +2,8 @@
 #include <iostream>
 #include "levelButton.hpp"
 #include "changeColourButton.hpp"
-#include <SDL2/SDL.h>
+// #include <SDL2/SDL.h>
+#include <SDL.h>
 using namespace std;
 
 class welcomeScreen{

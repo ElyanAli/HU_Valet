@@ -4,10 +4,10 @@ void keyboardHandler::handleKeyboardEvent(SDL_Event event) {
         prevKeyState[thisKey] = currentKeyState[thisKey];
         currentKeyState[thisKey] = static_cast<SDL_EventType>(event.type);
     }
-bool keyboardHandler::isPressed(SDL_KeyCode keyCode) {
+bool keyboardHandler::isPressed(SDL_Keycode keyCode) {
         return (currentKeyState[keyCode] == SDL_KEYDOWN);
     }
-bool keyboardHandler::isReleasedNow(SDL_KeyCode keyCode) {
+bool keyboardHandler::isReleasedNow(SDL_Keycode keyCode) {
         return (prevKeyState[keyCode] == SDL_KEYDOWN & currentKeyState[keyCode] == SDL_KEYUP);
     }
 

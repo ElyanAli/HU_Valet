@@ -5,10 +5,14 @@
 #include "obstacles.hpp"
 #include "coin.hpp"
 #include "ParkingSpot.hpp"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_main.h>
+// #include <SDL2/SDL.h>
+// #include <SDL2/SDL_image.h>
+// #include <SDL2/SDL_main.h>
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_main.h>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 class Car;

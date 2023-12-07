@@ -5,6 +5,8 @@
 #include "coin.hpp"
 #include "ParkingSpot.hpp"
 #include "car.hpp"
+#include "digits.hpp"
+
 using namespace std;
 
 class Level{
@@ -25,5 +27,7 @@ class Level{
         void insertCoin(SDL_Rect);
         void insertObstacle(string, SDL_Rect, SDL_Rect);
         ParkingSpot* getParking();
-
+        // void insertScore(SDL_Rect mrct);
+        // void incScore();
+        // vector<Digits*> score;
 };

@@ -48,6 +48,15 @@ void realGame::createLevel1(){
     level1->insertCoin({675, 460, 36, 36});
     levelBoundaries = {20, 980, 0, 600};
 
+    // level1->insertScore({250, 480, 30, 35});
+    Digits* scoreDigit = new Digits(gRenderer, {250, 480, 30, 35});
+    score.push_back(scoreDigit);
+
+    scoreDigit = new Digits(gRenderer, {290, 480, 30, 35});
+    score.push_back(scoreDigit);
+
+    scoreDigit = new Digits(gRenderer, {330, 480, 30, 35});
+    score.push_back(scoreDigit);
 
 
 
@@ -104,7 +113,7 @@ void realGame::createLevel2(){
     level2->insertCoin({166, 124, 36, 36});
     level2->insertCoin({459, 226, 36, 36});
 
-
+    // level2->insertScore({250, 480, 30, 35});
 }
 
 void realGame::updateCurrentState(SDL_Event& event){
@@ -132,14 +141,25 @@ void realGame::updateCurrentState(SDL_Event& event){
                 cM.resolveCollision(thisCar, prevCarRect);
             };
         }
+        // bool coinCollected = false;
         for(int i = 0; i < levels[level]->coins.size(); i++){
             // cout<<levels[level]->coins.size()<< ", "<< i<<"\n";
             Coin* thisCoin =  (levels[level]->coins[i]);
             if(cM.checkCollisionCoin(thisCar, thisCoin)){
                 std::cout<<"coin collected"<<"\n";
+                // coinCollected = true;
+                // levels[level]->incScore(); //
+                scoreCount += 10;
+                int tempScore_10th = (scoreCount / 10);
+                int tempScore_0th = tempScore_10th % 10;
+                // cout<<tempScoreCount<<endl;
+                for (int digit = 0; digit < score.size(); digit++) {
+                    score[digit]->incDigit(digit, tempScore_0th, tempScore_10th);
+                }
                 cM.resolveCoinCollision(thisCoin);
             }
         }
+
         if(cM.checkParking(thisCar, levels[level]->getParking())){
             levelComplete = true;
             cout<<"parked"<<"\n";
@@ -151,10 +171,17 @@ void realGame::updateCurrentState(SDL_Event& event){
                 if (done->update(*myMouse)){
                     level+=1;
                     if (level == 1){
+                        int tempScore_10th = (scoreCount / 10);
+                        int tempScore_0th = tempScore_10th % 10;
+                        score[0]->incDigit(0, 0, 10);
                         createLevel2();
                     }else{
                         level = -1;
                         levels = {};
+                        score = {};
+                        // for (int i = 0; i < score.size(); i++) {
+                        //     delete score[i];
+                        // }
                     }
                 };
             }
@@ -204,6 +231,9 @@ void realGame::drawCurrent(){
         levels[level]->drawLevel();
         if (levelComplete){
             done->draw();
+        }
+        for (int i = 0; i < score.size(); i++) {
+            score[i]->drawDigits();
         }
         myMouse->draw();
     }

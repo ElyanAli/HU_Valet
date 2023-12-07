@@ -23,6 +23,16 @@ void Level::insertCoin(SDL_Rect mrct){
     coins.push_back(thisCoin);
 }
 
+//
+// void Level::insertScore(SDL_Rect mrct) {
+//     Digits* thisDigit = new Digits(renderer, mrct);
+//     score.push_back(thisDigit);
+// }
+
+// void Level::incScore() {
+//     // cout<<"No error here?";
+//     score[0]->incDigit();
+// } //
 
 void Level::drawLevel(){
     SDL_RenderCopy(renderer, image, NULL, NULL);
@@ -34,6 +44,9 @@ void Level::drawLevel(){
         coins[i]->drawCoin();
     }
     playerCar->draw();
+    // for (int i = 0; i < score.size(); i++) {
+    //     score[i]->drawDigits();
+    // }
 }
 
 SDL_Texture* Level::loadLevel(){
