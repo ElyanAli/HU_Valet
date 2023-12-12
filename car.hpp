@@ -25,8 +25,11 @@ class Car : public Objects { //inherit from object
         int velocity = 0;
         void setAngle();
         void moveCar();
+        int savedAngle;
+        SDL_Rect savedRect;
+        bool collided = false;
     public:
-        
+
         Car (SDL_Renderer* Rndr, string path, SDL_Rect sRect, SDL_Rect mRect);
         void draw();
         void accelerate();
@@ -35,9 +38,9 @@ class Car : public Objects { //inherit from object
         void turnRight();
         void releaseAccelerate();
         void releaseDeceleration();
-        void hardSetCarPos(float);
         float getAngle();
         friend class CollisionManager;
+        void saveRect();
         
 
 };

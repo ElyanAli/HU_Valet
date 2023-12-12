@@ -6,6 +6,7 @@ Car::Car (SDL_Renderer* Rndr, string path, SDL_Rect sRect, SDL_Rect mRect) : Obj
     image = loadImage(path);
     angle = 270;
     center ={moverRect.w/2,moverRect.h/2};
+    saveRect();
 }
 
 void Car::draw() {
@@ -19,14 +20,18 @@ void Car::moveCar(){
     moverRect.y -= static_cast<int>(velocity * cos(angle*(M_PI/180)));
 }
 void Car::accelerate() {
-    if (velocity < 6){
-        velocity += acceleration;
+    if (!collided){
+        if (velocity < 6){
+            velocity += acceleration;
+        }
     }
     // std::cout<<velocity<<std::endl;
 }
 void Car::decelerate() {
-    if (velocity > -6){
-        velocity -= acceleration;
+    if (!collided){
+        if (velocity > -6){
+            velocity -= acceleration;
+        }
     }
     
 }
@@ -41,12 +46,16 @@ void Car::setAngle(){
 
 
 void Car::turnLeft() {
-    setAngle();
-    angle -= ANGLE_CHANGE;
+    if (!collided){
+        setAngle();
+        angle -= ANGLE_CHANGE;
+    }
 }
 void Car::turnRight() {
-    setAngle();
-    angle += ANGLE_CHANGE;
+    if (!collided){
+        setAngle();
+        angle += ANGLE_CHANGE;
+    }
 }
 void Car::releaseAccelerate() {
     while(velocity>0){
@@ -73,7 +82,11 @@ float Car::getAngle(){
     return angle;
 }
 
-void Car::hardSetCarPos(float overlap){
-    velocity -= velocity;
+void Car::saveRect(){
+    cout<<"saved at "<< moverRect.x<<", "<<moverRect.y<<", "<<moverRect.w<<", "<< moverRect.h<<endl;
+    if (!collided){
+        savedRect = moverRect;
+        savedAngle = angle;
+    }
+    cout<<"saved at "<< savedRect.x<<", "<<savedRect.y<<", "<<savedRect.w<<", "<< savedRect.h<<endl;
 }
-

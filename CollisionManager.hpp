@@ -5,15 +5,18 @@
 #include "obstacles.hpp"
 #include "coin.hpp"
 #include "ParkingSpot.hpp"
+#include "score.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_main.h>
 #include <vector>
 using namespace std;
 
+
 class Car;
 class Coin;
 class ParkingSpot;
+class Score;
 
 class CollisionManager{
     private:
@@ -22,15 +25,15 @@ class CollisionManager{
         vector<vector<float>> getVertices(Objects* obj);
         vector<vector<float>> getCarVertices(Objects* obj);
         vector<vector<float>> getObstacleVertices(Objects* obj);
+        int collisionTimer = 0;
 
     public:
         bool checkCollisionObs( Car* car, Objects* object);
         bool checkCollisionCoin(Car* car, Coin* coin);
         void resolveCoinCollision(Coin* thisCoin);
         bool checkParking( Car*, ParkingSpot*);
-        void resolveCollision(Car*, SDL_Rect);
-
-        
+        void resolveCollision(Car*);
+        void revive(Car*);
 };
 
 

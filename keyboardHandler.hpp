@@ -14,4 +14,6 @@ class keyboardHandler {
         bool isPressed(SDL_KeyCode keyCode);
 
         bool isReleasedNow(SDL_KeyCode keyCode);
+        
+        void clearAll();
 };

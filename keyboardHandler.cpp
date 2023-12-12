@@ -10,4 +10,8 @@ bool keyboardHandler::isPressed(SDL_KeyCode keyCode) {
 bool keyboardHandler::isReleasedNow(SDL_KeyCode keyCode) {
         return (prevKeyState[keyCode] == SDL_KEYDOWN & currentKeyState[keyCode] == SDL_KEYUP);
     }
+void keyboardHandler::clearAll(){
+    prevKeyState.clear();
+    currentKeyState.clear();
+}
 

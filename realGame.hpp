@@ -11,32 +11,45 @@
 #include "welcomeScreen.hpp"
 #include "keyboardHandler.hpp"
 #include "CollisionManager.hpp"
-#include "levelButton.hpp"
+#include "button.hpp"
 #include "obstacles.hpp"
 #include "coin.hpp"
 #include "mouse.hpp"
+#include "score.hpp"
+#include "digits.hpp"
 
 class realGame{
     private:
         int level = -1;
         SDL_Renderer* gRenderer = nullptr;
         vector<Level*> levels;
+        vector<int> levelBoundaries;
         welcomeScreen* wscreen = nullptr;
         keyboardHandler keyHandler;
-        levelButton* done;
+        button* done;
+        button* revive;
+        button* backToHome;
         Mouse* myMouse;
-        bool levelComplete;
-        vector<int> levelBoundaries;
+        Score* scorer;
+        CollisionManager cM;
+        bool levelComplete= false;
         void createLevel1();
         void createLevel2();
-        void createLevel3();
         void updateCarPos();
-        bool collided = false;
-        CollisionManager cM;
+        bool gameOver= false;
+        bool revived= false;
+        bool reviveButtonEnabled= false;
+        SDL_Texture* gameOverText;
+        SDL_Texture* reviveText;
+        SDL_Texture* loadImage(string);
+        int coinsReqForRevival;
+        int incReqCoinsBy;
+        Digits digitDisplay;
     public:
         realGame(SDL_Renderer*);
         void drawCurrent();
         void updateCurrentState(SDL_Event&);
         void delay();
-        // void drawItems();
+        void displayNumber(int, int, int);
+        void displayNumber(int, int, int, int);
 };

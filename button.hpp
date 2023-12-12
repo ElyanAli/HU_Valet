@@ -6,7 +6,7 @@
 #include "mouse.hpp"
 
 
-class levelButton{
+class button{
     
     SDL_Renderer* ren;
     SDL_Texture* texture;
@@ -14,8 +14,8 @@ class levelButton{
     bool isToggled = false;
     std::string buttonPath;
     public:
-        levelButton();
-        levelButton (SDL_Renderer*, SDL_Rect, SDL_Rect, std::string);;
+        button();
+        button (SDL_Renderer*, SDL_Rect, SDL_Rect, std::string);;
         bool update(Mouse&);
         void draw();
 

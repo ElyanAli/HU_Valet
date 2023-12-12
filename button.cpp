@@ -1,10 +1,10 @@
-#include "levelButton.hpp"
+#include "button.hpp"
 
 
 
 
-levelButton::levelButton(){}
-levelButton::levelButton(SDL_Renderer* renderer, SDL_Rect srct, SDL_Rect mrct, string p): ren(renderer), buttonPath(p){
+button::button(){}
+button::button(SDL_Renderer* renderer, SDL_Rect srct, SDL_Rect mrct, string p): ren(renderer), buttonPath(p){
     SDL_Texture* newTexture = NULL;
 
 	//Load image at specified path
@@ -32,7 +32,7 @@ levelButton::levelButton(SDL_Renderer* renderer, SDL_Rect srct, SDL_Rect mrct, s
 }
 
 
-bool levelButton::update(Mouse& mouse){
+bool button::update(Mouse& mouse){
     
         if (SDL_HasIntersection(&drect, &mouse.point)){
             isToggled = true;
@@ -47,6 +47,6 @@ bool levelButton::update(Mouse& mouse){
         return isToggled;
 }
 
-void levelButton::draw(){
+void button::draw(){
     SDL_RenderCopy(ren, texture, &srect, &drect);
 }

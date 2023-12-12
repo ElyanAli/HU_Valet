@@ -1,13 +1,13 @@
 #pragma once
 #include <iostream>
-#include "levelButton.hpp"
+#include "button.hpp"
 #include "changeColourButton.hpp"
 #include <SDL2/SDL.h>
 using namespace std;
 
 class welcomeScreen{
     private:
-        levelButton *start = nullptr;
+        button *start = nullptr;
         changeColourButton button_1;
         changeColourButton button_2;
         string screenPath;

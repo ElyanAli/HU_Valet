@@ -139,42 +139,13 @@ void Game::run( )
 			}  
         }
 		parkingGame->updateCurrentState(e);
+		
 		SDL_RenderClear(gRenderer); //removes everything from renderer
 		
 		//***********************draw the objects here********************
 		parkingGame->drawCurrent();
-		// drawObjects(gRenderer, assets);
 		//****************************************************************
     	SDL_RenderPresent(gRenderer); //displays the updated renderer
 	    parkingGame->delay();	//causes sdl engine to delay for specified miliseconds
 	}
 }
-			
-
-// void Game::HandleKeyPress() {
-// 	if (pressedKeys.count(SDLK_UP))
-// 	{
-// 		playerCar->accelerate();
-// 	}
-// 	if (pressedKeys.count(SDLK_DOWN))
-// 	{
-// 		playerCar->decelerate();
-// 	}
-// 	if (pressedKeys.count(SDLK_LEFT))
-// 	{
-// 		playerCar->turnLeft();
-// 	}
-// 	if (pressedKeys.count(SDLK_RIGHT))
-// 	{
-// 		playerCar->turnRight();
-// 	}
-// }
-
-// void Game::HandleKeyRelease() {
-//     if (pressedKeys.count(SDLK_UP) ){
-//         playerCar->releaseAccelerate();
-// 	}
-//     if (pressedKeys.count(SDLK_DOWN)){
-//         playerCar->releaseDeceleration();
-// 	}
-// }

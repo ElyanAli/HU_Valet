@@ -30,10 +30,12 @@ bool CollisionManager::checkCollisionObs(Car* car, Objects* obstacle) {
   for (int i = 0; i < axes.size(); ++i) {
     if (!overlap(carProjections[i], obstacleProjections[i])) {
       // No overlap on this axis, objects separated
+      car->collided = false;
       return false;
     }
   }
-
+  car->collided = true;
+  cout<<car->collided<<endl;
   // All axes have overlap, collision confirmed!
   return true;
 }
@@ -179,9 +181,16 @@ void CollisionManager::resolveCoinCollision(Coin* thisCoin){
     thisCoin->collected = true;
 };
 
-void CollisionManager::resolveCollision(Car* car, SDL_Rect prevPos){
-    car->moverRect = prevPos;
-    car->velocity -= car->velocity;
+void CollisionManager::resolveCollision(Car* car){
+  car->collided = true;
+  car->velocity -= car->velocity;
+}
+
+void CollisionManager::revive(Car* car){
+  std::cout<< car->savedRect.x<<", "<<car->savedRect.y<<", "<<car->savedRect.w<<", "<<car->savedRect.h<<std::endl;
+  car->moverRect = car->savedRect;
+  car->angle = car->savedAngle;
+  std::cout<< car->savedRect.x<<", "<<car->savedRect.y<<", "<<car->savedRect.w<<", "<<car->savedRect.h<<std::endl;
 }
 
 
