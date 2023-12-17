@@ -50,6 +50,8 @@ class realGame{
         void drawCurrent();
         void updateCurrentState(SDL_Event&);
         void delay();
+        bool breakLoop();
         void displayNumber(int, int, int);
         void displayNumber(int, int, int, int);
+        ~realGame();
 };

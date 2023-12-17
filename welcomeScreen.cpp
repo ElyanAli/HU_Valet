@@ -4,7 +4,7 @@ welcomeScreen::welcomeScreen(){}
 
 welcomeScreen::welcomeScreen( SDL_Renderer* r)
     : renderer(r){
-        start = new button(renderer, {0, 0, 107, 101}, {485, 111, 107, 101}, "./images/playbutton.png");
+        start = new button(renderer, {0, 0, 107, 101}, {472, 111, 107, 101}, "./images/playbutton.png");
         screenPath = "./images/welcomeScreen.png";
         mouse = new Mouse(r, {0, 0, 457, 531}, {1000, 600, 50, 60});  
     }

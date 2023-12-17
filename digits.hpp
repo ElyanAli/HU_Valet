@@ -32,5 +32,6 @@ class Digits : public Objects { //inherit from object
         Digits(SDL_Renderer* Rndr);
         void drawDigit(int digit, int posX, int posY);
         void drawDigit(int digit, int posX, int posY, int w, int h);
+        void drawDigit(int digit, int posX, int posY, int angle);
 
 };

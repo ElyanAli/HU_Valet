@@ -2,6 +2,19 @@
 #include "CollisionManager.hpp"
 
 
+bool CollisionManager::checkCollisionBnd(Car* car, vector<int> boundary) {
+  // Calculate car's position relative to camera
+  int margin = 15;
+  float carX = car->getPosition().x;
+  float carY = car->getPosition().y;
+  float carWidth = car->getMoverRect().w;
+  float carHeight = car->getMoverRect().h;
+
+  // Check for collision with margins around screen edges
+  return (carX - margin < boundary[0] || carX + carWidth + margin > boundary[1] ||
+          carY - margin < boundary[2] || carY + carHeight + margin > boundary[3]);
+};
+
 bool CollisionManager::checkCollisionObs(Car* car, Objects* obstacle) {
 
   // Define axes (car edges, obstacle edges, etc.)
@@ -129,10 +142,6 @@ vector<vector<float>> CollisionManager::getObstacleVertices(Objects* obj) {
 
   return vertices;
 }
-
-
-
-
 
 bool CollisionManager::checkParking(Car* car, ParkingSpot* parkingSpace) {
   // Boundary check with tolerance

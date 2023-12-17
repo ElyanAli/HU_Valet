@@ -28,9 +28,10 @@ class CollisionManager{
         int collisionTimer = 0;
 
     public:
-        bool checkCollisionObs( Car* car, Objects* object);
-        bool checkCollisionCoin(Car* car, Coin* coin);
-        void resolveCoinCollision(Coin* thisCoin);
+        bool checkCollisionBnd(Car*, vector<int>);
+        bool checkCollisionObs( Car*, Objects*);
+        bool checkCollisionCoin(Car* , Coin* );
+        void resolveCoinCollision(Coin* );
         bool checkParking( Car*, ParkingSpot*);
         void resolveCollision(Car*);
         void revive(Car*);

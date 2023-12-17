@@ -82,10 +82,10 @@ void Game::close()
 	SDL_DestroyTexture(assets);
 	assets=NULL;
 	SDL_DestroyTexture(gTexture);
-	
 	//Destroy window
 	SDL_DestroyRenderer( gRenderer );
 	SDL_DestroyWindow( gWindow );
+	delete parkingGame;
 	gWindow = NULL;
 	gRenderer = NULL;
 	//Quit SDL subsystems
@@ -136,16 +136,19 @@ void Game::run( )
 				quit = true;
 			}else{
 				parkingGame->updateCurrentState(e);
+				if(parkingGame->breakLoop()){
+					break;
+				};
 			}  
         }
-		parkingGame->updateCurrentState(e);
 		
 		SDL_RenderClear(gRenderer); //removes everything from renderer
-		
 		//***********************draw the objects here********************
 		parkingGame->drawCurrent();
 		//****************************************************************
-    	SDL_RenderPresent(gRenderer); //displays the updated renderer
+		 //displays the updated renderer
+    	SDL_RenderPresent(gRenderer);
 	    parkingGame->delay();	//causes sdl engine to delay for specified miliseconds
+		parkingGame->updateCurrentState(e); 
 	}
 }
