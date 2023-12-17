@@ -48,7 +48,6 @@ bool CollisionManager::checkCollisionObs(Car* car, Objects* obstacle) {
     }
   }
   car->collided = true;
-  cout<<car->collided<<endl;
   // All axes have overlap, collision confirmed!
   return true;
 }
@@ -171,7 +170,6 @@ bool CollisionManager::checkCollisionCoin(Car* car, Coin* coin) {
     SDL_Rect coinBox = coin->getMoverRect();
     vector<vector<float>> carCorners = getCarVertices(car);
     bool intersects = SDL_HasIntersection(&carBox, &coinBox);
-    // std::cout<<"checking for collision"<<"\n";
     for (const auto& corner : carCorners) {
       if (corner[0] >= coinBox.x && corner[0] <= coinBox.x + coinBox.w &&
           corner[1] >= coinBox.y && corner[1] <= coinBox.y + coinBox.h) {
@@ -179,7 +177,6 @@ bool CollisionManager::checkCollisionCoin(Car* car, Coin* coin) {
         break;
       }
     }
-    // std::cout<<"checked for collision"<<"\n";
     return intersects;
   }
   return false;
@@ -196,10 +193,8 @@ void CollisionManager::resolveCollision(Car* car){
 }
 
 void CollisionManager::revive(Car* car){
-  std::cout<< car->savedRect.x<<", "<<car->savedRect.y<<", "<<car->savedRect.w<<", "<<car->savedRect.h<<std::endl;
   car->moverRect = car->savedRect;
   car->angle = car->savedAngle;
-  std::cout<< car->savedRect.x<<", "<<car->savedRect.y<<", "<<car->savedRect.w<<", "<<car->savedRect.h<<std::endl;
 }
 
 

@@ -119,6 +119,7 @@ SDL_Texture* Game::loadTexture( std::string path )
 
 	return newTexture;
 }
+
 void Game::run( )
 {
 	bool quit = false;
@@ -136,6 +137,7 @@ void Game::run( )
 				quit = true;
 			}else{
 				parkingGame->updateCurrentState(e);
+				// if game is over
 				if(parkingGame->breakLoop()){
 					break;
 				};
@@ -149,6 +151,6 @@ void Game::run( )
 		 //displays the updated renderer
     	SDL_RenderPresent(gRenderer);
 	    parkingGame->delay();	//causes sdl engine to delay for specified miliseconds
-		parkingGame->updateCurrentState(e); 
+		parkingGame->updateCurrentState(e); //to update when there are no events
 	}
 }

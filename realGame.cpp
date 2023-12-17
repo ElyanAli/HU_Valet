@@ -131,6 +131,7 @@ void realGame::updateCurrentState(SDL_Event& event){
             }
         }
     }
+    // if game is over then reset all levels;
     else if (gameOver){
         level = -1;
         for (auto level : levels){
@@ -140,7 +141,9 @@ void realGame::updateCurrentState(SDL_Event& event){
         gameOver = false;
         keyHandler.clearAll();
     }
+    // check if revive is enabled
     else if(reviveButtonEnabled){
+        // check which button is clicked
         if (event.type == SDL_MOUSEBUTTONUP){
             if (revive->update(*myMouse)){
                 reviveButtonEnabled = false;
@@ -178,63 +181,57 @@ void realGame::updateCurrentState(SDL_Event& event){
         }
         
         // check for collision with all obstacles
-        if (!gameOver){
-            for (int i = 0; i < levels[level]->obstacles.size(); i++){
-                Obstacle* thisObstacle = (levels[level]->obstacles[i]);
-                // cout<<cM.checkCollision(thisCar, thisObstacle)<<endl;
-                if(cM.checkCollisionObs(thisCar, thisObstacle)){
-                    bool coinsAvailable = scorer->checkCoinsForCollision(coinsReqForRevival);
-                    if (coinsAvailable){
-                        reviveButtonEnabled = true;
-                    }
-                    else{
-                        cout<<"Game is Over"<<endl;
-                        gameOver = true;
-                    }
-                    cM.resolveCollision(thisCar);
-                    break;
-                };
-            }
+        for (int i = 0; i < levels[level]->obstacles.size(); i++){
+            Obstacle* thisObstacle = (levels[level]->obstacles[i]);
+            // cout<<cM.checkCollision(thisCar, thisObstacle)<<endl;
+            if(cM.checkCollisionObs(thisCar, thisObstacle)){
+                bool coinsAvailable = scorer->checkCoinsForCollision(coinsReqForRevival);
+                if (coinsAvailable){
+                    reviveButtonEnabled = true;
+                }
+                else{
+                    cout<<"Game is Over"<<endl;
+                    gameOver = true;
+                }
+                cM.resolveCollision(thisCar);
+                return;
+            };
         }
         
         // check for collection of each coin
-        if (!gameOver){
-            for(int i = 0; i < levels[level]->coins.size(); i++){
-                // cout<<levels[level]->coins.size()<< ", "<< i<<"\n";
-                Coin* thisCoin =  (levels[level]->coins[i]);
-                if(cM.checkCollisionCoin(thisCar, thisCoin)){
-                    std::cout<<"coin collected"<<"\n";
-                    cM.resolveCoinCollision(thisCoin);
-                    scorer->updateScoreForCoin();
-                }
+        for(int i = 0; i < levels[level]->coins.size(); i++){
+            // cout<<levels[level]->coins.size()<< ", "<< i<<"\n";
+            Coin* thisCoin =  (levels[level]->coins[i]);
+            if(cM.checkCollisionCoin(thisCar, thisCoin)){
+                std::cout<<"coin collected"<<"\n";
+                cM.resolveCoinCollision(thisCoin);
+                scorer->updateScoreForCoin();
             }
         }
         // check if car is parked in the spot
-        if (!gameOver){
-            if(cM.checkParking(thisCar, levels[level]->getParking())){
-                levelComplete = true;
-                cout<<"parked"<<"\n";
-            }else{
-                levelComplete = false;
-            }
-        
-            // check if the level is complete atm or not
-            if (levelComplete){
-                // check if the next button is pressed
-                if (event.type == SDL_MOUSEBUTTONUP){
-                    if (done->update(*myMouse)){
-                        scorer->updateScoreForLevel(60);
-                        level+=1;
-                        if (level == 1){
-                            createLevel2();
-                        }else{
-                            level = -1;
-                            levels = {};
-                        }
-                    };
+        if(cM.checkParking(thisCar, levels[level]->getParking())){
+            // check for coins 70% collected
+            levelComplete = true;
+        }else{
+            levelComplete = false;
+        }
+    
+        // check if the level is complete atm or not
+        if (levelComplete){
+            // check if the next button is pressed
+            if (event.type == SDL_MOUSEBUTTONUP){
+                if (done->update(*myMouse)){
+                    scorer->updateScoreForLevel(60);
+                    level+=1;
+                    if (level == 1){
+                        createLevel2();
+                    }else{
+                        // you win and game over
+                    }
                 }
             }
         }
+        
     }
     
 }

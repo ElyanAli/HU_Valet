@@ -18,7 +18,6 @@ class ParkingSpot:public Objects{
 
     public:
         ParkingSpot(SDL_Renderer*, SDL_Rect, SDL_Rect, string);
-        void draw();
 
 };
 

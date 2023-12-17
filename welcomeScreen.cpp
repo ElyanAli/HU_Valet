@@ -60,7 +60,5 @@ bool welcomeScreen::update(bool buttonClicked){
 }
 
     //destructor
-welcomeScreen::~welcomeScreen() {
-        
-    }
+welcomeScreen::~welcomeScreen(){}
     

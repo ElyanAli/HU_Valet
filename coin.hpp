@@ -20,12 +20,6 @@ class Coin : public Objects { //inherit from object
     public:
         friend class CollisionManager;
         Coin(SDL_Renderer* Rndr, SDL_Rect mRect);
-        void drawCoin();
-        // void accelerate();
-        // void decelerate();
-        // void turnLeft();
-        // void turnRight();
-        // void releaseAccelerate();
-        // void releaseDeceleration();
+        void draw();
 
 };

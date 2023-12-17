@@ -1,11 +1,7 @@
 #include "coin.hpp"
 
 Coin::Coin (SDL_Renderer* Rndr, SDL_Rect mRect) : Objects(Rndr, {74, 0, 36, 36}, mRect) {
-    cout<<"loading coin"<<"\n";
     image = loadImage(path);
-    cout<<"loaded coin"<<"\n";
-    // cout<<"Try Coin"<<endl;
-    // cout<<image;
 }
 
 void Coin::updateMoverRect(int width){
@@ -13,12 +9,10 @@ void Coin::updateMoverRect(int width){
     moverRect.w = width;
 }
 
-void Coin::drawCoin() {
+void Coin::draw() {
     if (!collected){
         SDL_RenderCopy(renderer, image, &srcRect, &moverRect);
-        // cout<<"drew coin"<<endl;
         timerCount += 1;
-        
         if (timerCount> 3){
             if (srcRect.x == 74 && srcRect.w == 36) {
                 srcRect.x = 157;
@@ -44,8 +38,4 @@ void Coin::drawCoin() {
             timerCount = 0;
         }
     }
-    // moverRect.x += static_cast<int>(velocity * sin(angle*(M_PI/180)));
-    // moverRect.y -= static_cast<int>(velocity * cos(angle*(M_PI/180)));
-    // SDL_RenderCopyEx(renderer, image, &srcRect, &moverRect, angle, &center, SDL_FLIP_NONE);
-    // cout<<angle<<endl;
 }

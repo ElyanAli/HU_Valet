@@ -4,7 +4,3 @@ ParkingSpot::ParkingSpot(SDL_Renderer* rndr, SDL_Rect srct, SDL_Rect mrct, strin
     path = pth;
     image = loadImage(path);
 }
-
-void ParkingSpot::draw(){
-    SDL_RenderCopy(renderer, image, &srcRect, &moverRect);
-}

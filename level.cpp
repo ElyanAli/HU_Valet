@@ -8,29 +8,25 @@ Level::Level(SDL_Renderer* r, int level, ParkingSpot* pSpot, string levelPath, s
     image = loadLevel();
     playerCar = new Car(renderer, carPath, carSrc, carMover);
 };
-// void Level::loadCoins(){
-//     for(int i = 0; i < coins.size(); i++){
-//         coins[i].loadCoin();
-//     }
-// }
+
 void Level::insertObstacle(string pth, SDL_Rect rct, SDL_Rect mrct){
     Obstacle* thisObstacle = new Obstacle(renderer, pth, rct, mrct);
     obstacles.push_back(thisObstacle);
 }
+
 void Level::insertCoin(SDL_Rect mrct){
     Coin* thisCoin = new Coin(renderer, mrct);
     coins.push_back(thisCoin);
 }
 
-
 void Level::drawLevel(){
     SDL_RenderCopy(renderer, image, NULL, NULL);
     parking->draw();
     for(int i = 0;  i < obstacles.size(); i++){
-        obstacles[i]->drawObstacle();
+        obstacles[i]->draw();
     }
     for(int i = 0; i < coins.size(); i++){
-        coins[i]->drawCoin();
+        coins[i]->draw();
     }
     playerCar->draw();
 }
@@ -57,8 +53,6 @@ SDL_Texture* Level::loadLevel(){
         // cout<<newTexture<<endl;
     return newTexture;
 }
-
-
 
 ParkingSpot* Level::getParking(){
     return parking;

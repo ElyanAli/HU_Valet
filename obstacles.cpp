@@ -5,10 +5,6 @@ Obstacle::Obstacle(SDL_Renderer* r, string pth, SDL_Rect rct, SDL_Rect mrct): Ob
     image = loadImage(path);
 }
 
-void Obstacle::drawObstacle(){
-    SDL_RenderCopy(renderer, image, &srcRect, &moverRect);
-}
-
 std::string Obstacle::getPath(){
     return path;
 }

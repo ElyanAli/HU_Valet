@@ -36,6 +36,7 @@ void Mouse::update(){
         // cout<<mouseX<<" "<<mouseY<<" here"<<endl;
         
     }
+
 void Mouse::draw(){
         SDL_ShowCursor(false);
         SDL_RenderCopy(ren, tex, &rect, &point);

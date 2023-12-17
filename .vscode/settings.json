@@ -63,7 +63,11 @@
         "unordered_map": "cpp",
         "unordered_set": "cpp",
         "variant": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "deque": "cpp",
+        "fstream": "cpp",
+        "iomanip": "cpp",
+        "stack": "cpp"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }

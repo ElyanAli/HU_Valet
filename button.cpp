@@ -36,13 +36,9 @@ bool button::update(Mouse& mouse){
     
         if (SDL_HasIntersection(&drect, &mouse.point)){
             isToggled = true;
-            cout<<"toggled"<<endl;
-            // srect.x = 400; 
         }
         else{
             isToggled = false;
-            // srect.x = 0;
-        // cout<<"hiiiiiiiiiii"<<endl;
         }
         return isToggled;
 }
