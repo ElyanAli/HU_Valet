@@ -42,7 +42,6 @@ SDL_Texture* Objects::loadImage(string path) {
 		//Get rid of old loaded surface
 		SDL_FreeSurface( loadedSurface );
 	}
-    // cout<<newTexture<<endl;
 	return newTexture;
 }
 
@@ -52,4 +51,9 @@ void Objects::draw(){
 
 SDL_Point Objects::getPosition(){
 	return {moverRect.x , moverRect.y};
+}
+
+Objects::~Objects(){
+	SDL_DestroyTexture(image);
+	image = nullptr;
 }

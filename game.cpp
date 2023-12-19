@@ -59,30 +59,8 @@ bool Game::init()
 	return success;
 }
 
-/*bool Game::loadMedia()
-{
-	//Loading success flag
-	bool success = true;
-	
-	assets = loadTexture("./images/car1_blue.png");
-    gTexture = loadTexture("./images/level1.png");
-	// cout<<gTexture<<endl;
-	if(assets==NULL || gTexture==NULL)
-    {
-        printf("Unable to run due to error: %s\n",SDL_GetError());
-        success =false;
-    }
-	return success;
-}
-*/
-
 void Game::close()
 {
-	//Free loaded images
-	SDL_DestroyTexture(assets);
-	assets=NULL;
-	SDL_DestroyTexture(gTexture);
-	//Destroy window
 	SDL_DestroyRenderer( gRenderer );
 	SDL_DestroyWindow( gWindow );
 	delete parkingGame;

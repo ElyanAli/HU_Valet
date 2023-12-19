@@ -39,8 +39,11 @@ class realGame{
         bool gameOver= false;
         bool revived= false;
         bool reviveButtonEnabled= false;
+        bool lessCoins = false;
         SDL_Texture* gameOverText;
         SDL_Texture* reviveText;
+        SDL_Texture* textBg;
+        SDL_Texture* lessCoinsText;
         SDL_Texture* loadImage(string);
         int coinsReqForRevival;
         int incReqCoinsBy;

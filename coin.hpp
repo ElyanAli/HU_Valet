@@ -21,5 +21,6 @@ class Coin : public Objects { //inherit from object
         friend class CollisionManager;
         Coin(SDL_Renderer* Rndr, SDL_Rect mRect);
         void draw();
+        bool isCollected();
 
 };

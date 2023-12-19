@@ -18,6 +18,7 @@ class button{
         button (SDL_Renderer*, SDL_Rect, SDL_Rect, std::string);;
         bool update(Mouse&);
         void draw();
+        ~button();
 
     // virtual ~levelButton();
 };

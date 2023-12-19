@@ -2,7 +2,6 @@
 #include <math.h>
 
 Car::Car (SDL_Renderer* Rndr, string path, SDL_Rect sRect, SDL_Rect mRect) : Objects(Rndr, sRect, mRect) {
-    cout<<path<<endl;
     image = loadImage(path);
     angle = 270;
     center ={moverRect.w/2,moverRect.h/2};
@@ -12,7 +11,6 @@ Car::Car (SDL_Renderer* Rndr, string path, SDL_Rect sRect, SDL_Rect mRect) : Obj
 void Car::draw() {
     moveCar();
     SDL_RenderCopyEx(renderer, image, &srcRect, &moverRect, angle, &center, SDL_FLIP_NONE);
-    // cout<<angle<<endl;
 }
 
 void Car::moveCar(){
@@ -25,7 +23,6 @@ void Car::accelerate() {
             velocity += acceleration;
         }
     }
-    // std::cout<<velocity<<std::endl;
 }
 void Car::decelerate() {
     if (!collided){
@@ -83,10 +80,8 @@ float Car::getAngle(){
 }
 
 void Car::saveRect(){
-    cout<<"saved at "<< moverRect.x<<", "<<moverRect.y<<", "<<moverRect.w<<", "<< moverRect.h<<endl;
     if (!collided){
         savedRect = moverRect;
         savedAngle = angle;
     }
-    cout<<"saved at "<< savedRect.x<<", "<<savedRect.y<<", "<<savedRect.w<<", "<< savedRect.h<<endl;
 }

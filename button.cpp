@@ -46,3 +46,8 @@ bool button::update(Mouse& mouse){
 void button::draw(){
     SDL_RenderCopy(ren, texture, &srect, &drect);
 }
+
+button::~button(){
+	SDL_DestroyTexture(texture);
+	texture = nullptr;
+}

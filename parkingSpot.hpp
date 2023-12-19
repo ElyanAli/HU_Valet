@@ -14,8 +14,6 @@ class ParkingSpot:public Objects{
     private:
         bool parked;
         string path;
-        SDL_Texture* image;
-
     public:
         ParkingSpot(SDL_Renderer*, SDL_Rect, SDL_Rect, string);
 

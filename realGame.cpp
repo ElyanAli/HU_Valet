@@ -9,6 +9,8 @@ realGame::realGame(SDL_Renderer* r): gRenderer(r), digitDisplay(r){
     scorer = new Score(r);
     gameOverText = loadImage("./images/gameOver.png");
     reviveText = loadImage("./images/reviveText.png");
+    textBg = loadImage("./images/textBg.png");
+    lessCoinsText = loadImage("./images/lessCoins.png");
 
 }
 
@@ -62,10 +64,11 @@ void realGame::createLevel2(){
     ParkingSpot* levelParking = new ParkingSpot(gRenderer, {0, 0, 81, 139}, {288, 38, 29, 50}, "./images/parking.png");
     Level* level2 = new Level(gRenderer, 2, levelParking, "./images/level2.png", "./images/car_green.png", {0, 5, 102, 198}, {536, 143, 25, 45});
     levels.push_back(level2);
-    levelBoundaries = {112, 888, 0, 555};
+    levelBoundaries = {132, 868, 0, 555};
     // insert obstacles
     level2->insertObstacle("./images/obstacle2.png", {0, 0, 473, 276}, {500, 188, 262, 175});
-    level2->insertObstacle("./images/obstacle3.png", {0, 0, 519, 283}, {180, 188, 250, 187});
+    level2->insertObstacle("./images/obstacle3_1.png", {0, 0, 394, 232}, {237, 208, 208, 155});
+    level2->insertObstacle("./images/obstacle3_2.png", {0, 0, 238, 230}, {181, 187, 123, 154});
     level2->insertObstacle("./images/obstacle4.png", {0, 104, 1038, 26}, {143, 496, 577, 19});
     level2->insertObstacle("./images/obstacle4.png", {0, 0, 31, 105}, {143, 440, 20, 57});
     level2->insertObstacle("./images/obstacle4.png", {1010, 0, 31, 105}, {700, 440, 20, 57});
@@ -155,7 +158,6 @@ void realGame::updateCurrentState(SDL_Event& event){
             else if (backToHome->update(*myMouse)){
                 reviveButtonEnabled = false;
                 gameOver = true;
-                cout<<"back"<<endl;
             }
         }
     }
@@ -173,7 +175,6 @@ void realGame::updateCurrentState(SDL_Event& event){
                 reviveButtonEnabled = true;
             }
             else{
-                cout<<"Game is Over"<<endl;
                 gameOver = true;
             }
             cM.resolveCollision(thisCar);
@@ -183,14 +184,12 @@ void realGame::updateCurrentState(SDL_Event& event){
         // check for collision with all obstacles
         for (int i = 0; i < levels[level]->obstacles.size(); i++){
             Obstacle* thisObstacle = (levels[level]->obstacles[i]);
-            // cout<<cM.checkCollision(thisCar, thisObstacle)<<endl;
             if(cM.checkCollisionObs(thisCar, thisObstacle)){
                 bool coinsAvailable = scorer->checkCoinsForCollision(coinsReqForRevival);
                 if (coinsAvailable){
                     reviveButtonEnabled = true;
                 }
                 else{
-                    cout<<"Game is Over"<<endl;
                     gameOver = true;
                 }
                 cM.resolveCollision(thisCar);
@@ -200,10 +199,8 @@ void realGame::updateCurrentState(SDL_Event& event){
         
         // check for collection of each coin
         for(int i = 0; i < levels[level]->coins.size(); i++){
-            // cout<<levels[level]->coins.size()<< ", "<< i<<"\n";
             Coin* thisCoin =  (levels[level]->coins[i]);
             if(cM.checkCollisionCoin(thisCar, thisCoin)){
-                std::cout<<"coin collected"<<"\n";
                 cM.resolveCoinCollision(thisCoin);
                 scorer->updateScoreForCoin();
             }
@@ -211,8 +208,15 @@ void realGame::updateCurrentState(SDL_Event& event){
         // check if car is parked in the spot
         if(cM.checkParking(thisCar, levels[level]->getParking())){
             // check for coins 70% collected
-            levelComplete = true;
+            if (levels[level]->isComplete()){
+                levelComplete = true;
+            }else{
+                lessCoins = true;
+                levelComplete = false;
+            }
+            
         }else{
+            lessCoins = false;
             levelComplete = false;
         }
     
@@ -274,21 +278,33 @@ void realGame::drawCurrent(){
     }
     else{
         levels[level]->drawLevel();
+        if (lessCoins){
+            SDL_Rect bgPos = {121, 226, 722, 149};
+            SDL_Rect textPos = {145, 257, 669, 81};
+            SDL_RenderCopy(gRenderer, textBg, NULL, &bgPos);
+            SDL_RenderCopy(gRenderer, lessCoinsText, NULL, &textPos);
+        }
+        
+        SDL_Rect bgPos = {800, 0, 250 ,120 };
+        SDL_RenderCopy(gRenderer, textBg, NULL, &bgPos);
+        scorer->displayScore();
         if (levelComplete){
             done->draw();
         }
-        scorer->displayScore();
         if (reviveButtonEnabled){
-            SDL_Rect pos = {253, 325, 400, 23};
+            bgPos = {230, 250, 500 ,120 };
+            SDL_Rect textPos = {253, 325, 400, 23};
+            SDL_RenderCopy(gRenderer, textBg, NULL, &bgPos);
             revive->draw();
             backToHome->draw();
-            SDL_RenderCopy(gRenderer, reviveText, NULL, &pos);
+            SDL_RenderCopy(gRenderer, reviveText, NULL, &textPos);
             displayNumber(coinsReqForRevival, 22, 675, 325);
         }
         if(gameOver){
-            SDL_Rect pos = {337, 198, 327, 188};
-            SDL_RenderCopy(gRenderer, gameOverText, NULL, &pos);
-            cout<<"Drawing Game is Over"<<endl;
+            bgPos = {300, 180, 400, 220};
+            SDL_Rect textPos = {337, 198, 327, 188};
+            SDL_RenderCopy(gRenderer, textBg, NULL, &bgPos);
+            SDL_RenderCopy(gRenderer, gameOverText, NULL, &textPos);
         }
         myMouse->draw();
         
@@ -314,7 +330,6 @@ SDL_Texture* realGame::loadImage(string path){
         //Get rid of old loaded surface
         SDL_FreeSurface( loadedSurface );
     }
-        // cout<<newTexture<<endl;
     return newTexture;
 }
 
@@ -341,22 +356,14 @@ void realGame::displayNumber(int num, int w, int x, int y){
 }
 realGame::~realGame(){
     for (auto level : levels){
-        for (auto obstacle: level->obstacles){
-            delete obstacle;
-        }
-        for (auto coin: level->coins){
-            delete coin;
-        }
-        delete level->playerCar;
         delete level;
     }
-    scorer->writeToFile();
+    delete scorer;
     delete wscreen;
     delete done;
     delete revive;
     delete backToHome;
     delete myMouse;
-    delete scorer;
     // delete gameOverText;
     // delete reviveText;
 

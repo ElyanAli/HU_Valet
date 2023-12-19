@@ -33,7 +33,6 @@ void Mouse::update(){
         SDL_GetMouseState(&mouseX, &mouseY);
         point.x = mouseX;
         point.y = mouseY;
-        // cout<<mouseX<<" "<<mouseY<<" here"<<endl;
         
     }
 
@@ -41,3 +40,8 @@ void Mouse::draw(){
         SDL_ShowCursor(false);
         SDL_RenderCopy(ren, tex, &rect, &point);
     }
+
+
+Mouse::~Mouse(){
+	SDL_DestroyTexture(tex);
+};

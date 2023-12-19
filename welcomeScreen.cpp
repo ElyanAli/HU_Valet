@@ -60,5 +60,10 @@ bool welcomeScreen::update(bool buttonClicked){
 }
 
     //destructor
-welcomeScreen::~welcomeScreen(){}
+welcomeScreen::~welcomeScreen(){
+    delete mouse;
+    delete start;
+    SDL_DestroyTexture(startTexture);
+    startTexture = nullptr;
+}
     

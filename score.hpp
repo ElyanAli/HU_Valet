@@ -19,12 +19,12 @@ class Score{
         int highScore;
         int xPos, yPos, xHome, yHome;
         void checkForHighScore();
-        Digits digit;
+        Digits* digit;
         SDL_Texture* highScoreText;
         SDL_Texture* currScoreText;
         SDL_Texture* levelScoreText;
         void loadHighScore();
-
+        
     public:
         Score(SDL_Renderer*);
         void updateScoreForLevel(int);
@@ -37,7 +37,9 @@ class Score{
         void updateScoreForRevival(int);
         void writeToFile();
         SDL_Texture* loadImage(string);
+        ~Score();
         friend class CollisionManager;
+
         
         
 

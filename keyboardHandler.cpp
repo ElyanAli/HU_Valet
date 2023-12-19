@@ -15,3 +15,7 @@ void keyboardHandler::clearAll(){
     currentKeyState.clear();
 }
 
+keyboardHandler::~keyboardHandler(){
+    clearAll();
+}
+

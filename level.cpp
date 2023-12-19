@@ -50,10 +50,33 @@ SDL_Texture* Level::loadLevel(){
         //Get rid of old loaded surface
         SDL_FreeSurface( loadedSurface );
     }
-        // cout<<newTexture<<endl;
+
     return newTexture;
 }
 
 ParkingSpot* Level::getParking(){
     return parking;
+};
+
+bool Level::isComplete(){
+    int totalCollected = 0;
+    for (auto coin: coins){
+        if (coin->isCollected()){
+            totalCollected++;
+        }
+    }
+    if (totalCollected>= coins.size()*0.7){
+        return true;
+    }
+    return false;
+}
+
+Level::~Level(){
+    for (auto obstacle: obstacles){
+            delete obstacle;
+        }
+        for (auto coin: coins){
+            delete coin;
+        }
+        delete playerCar;
 };

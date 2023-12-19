@@ -4,6 +4,9 @@ Coin::Coin (SDL_Renderer* Rndr, SDL_Rect mRect) : Objects(Rndr, {74, 0, 36, 36},
     image = loadImage(path);
 }
 
+bool Coin::isCollected(){
+    return collected;
+}
 void Coin::updateMoverRect(int width){
     moverRect.x += ((moverRect.w - width)/2);
     moverRect.w = width;

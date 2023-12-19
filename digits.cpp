@@ -1,9 +1,7 @@
 #include "digits.hpp"
 
 Digits::Digits(SDL_Renderer* Rndr) : Objects(Rndr, {392, 0, 30, 35}, {}) {
-    cout<<"loading digit"<<"\n";
     image = loadImage(path);
-    cout<<"loaded digit"<<"\n";
 }
 
 SDL_Rect Digits::getMover(int posX, int posY){

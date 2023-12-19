@@ -25,5 +25,7 @@ class Level{
         void insertCoin(SDL_Rect);
         void insertObstacle(string, SDL_Rect, SDL_Rect);
         ParkingSpot* getParking();
+        ~Level();
+        bool isComplete();
 
 };

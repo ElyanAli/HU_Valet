@@ -11,11 +11,11 @@ void Score::loadHighScore(){
 }
 
 
-Score::Score(SDL_Renderer* rndr): digit(rndr){
-    
+Score::Score(SDL_Renderer* rndr) {
+    digit = new Digits(rndr);
     renderer = rndr;
     xPos = 950;
-    yPos = 60;
+    yPos = 80;
     xHome = 300;
     yHome = 255;
     currentGameScore =0;
@@ -57,34 +57,34 @@ void Score::displayScore(){
     
     while (!(displayScore<10))
     {
-       digit.drawDigit(displayScore%10, xPos -(20*i), yPos);
+       digit->drawDigit(displayScore%10, xPos -(20*i), yPos);
        displayScore/=10;
        i+=1;
     }
-    digit.drawDigit(displayScore%10, xPos -(20*i), yPos);
-    SDL_Rect pos = {xPos -(20*i) - 100 ,yPos, 100, 20};
+    digit->drawDigit(displayScore%10, xPos -(20*i), yPos);
+    SDL_Rect pos = {xPos -(20*i) - 100 ,yPos, 80, 20};
     SDL_RenderCopy(renderer, levelScoreText, NULL, &pos);
     i = 0;
     displayScore = currentGameScore;
     while (!(displayScore<10))
     {
-       digit.drawDigit(displayScore%10, xPos -(20*i), yPos-30);
+       digit->drawDigit(displayScore%10, xPos -(20*i), yPos-30);
        displayScore/=10;
        i+=1;
     }
-    digit.drawDigit(displayScore%10, xPos -(20*i), yPos-30);
-    pos = {xPos -(20*i) - 100, yPos - 30, 100, 20};
+    digit->drawDigit(displayScore%10, xPos -(20*i), yPos-30);
+    pos = {xPos -(20*i) - 100, yPos - 30, 80, 20};
     SDL_RenderCopy(renderer, levelScoreText, NULL, &pos);
     i = 0;
     displayScore = highScore;
     while (!(displayScore<10))
     {
-       digit.drawDigit(displayScore%10, xPos -(20*i), yPos-60);
+       digit->drawDigit(displayScore%10, xPos -(20*i), yPos-60);
        displayScore/=10;
        i+=1;
     }
-    digit.drawDigit(displayScore%10, xPos -(20*i), yPos-60);
-    pos = {xPos -(20*i) - 100 ,yPos-60, 100, 20};
+    digit->drawDigit(displayScore%10, xPos -(20*i), yPos-60);
+    pos = {xPos -(20*i) - 100 ,yPos-60, 80, 20};
     SDL_RenderCopy(renderer, highScoreText, NULL, &pos);
     
 }
@@ -94,20 +94,20 @@ void Score::displayScoreForHome(int angle){
     int displayScore = currentGameScore;
     while (!(displayScore<10))
     {
-       digit.drawDigit(displayScore%10, xHome -(20*i) + 30, yHome+(12*i), angle);
+       digit->drawDigit(displayScore%10, xHome -(20*i) + 30, yHome+(12*i), angle);
        displayScore/=10;
        i+=1;
     }
-    digit.drawDigit(displayScore%10, xHome -(20*i) + 30, yHome+(12*i), angle);
+    digit->drawDigit(displayScore%10, xHome -(20*i) + 30, yHome+(12*i), angle);
     i = 0;
     displayScore = highScore;
     while (!(displayScore<10))
     {
-       digit.drawDigit(displayScore%10, xHome -(20*i) + 15, yHome-40+(12*i), angle);
+       digit->drawDigit(displayScore%10, xHome -(20*i) + 15, yHome-40+(12*i), angle);
        displayScore/=10;
        i+=1;
     }
-    digit.drawDigit(displayScore%10, xHome -(20*i) + 15, yHome- 40+(12*i), angle);
+    digit->drawDigit(displayScore%10, xHome -(20*i) + 15, yHome- 40+(12*i), angle);
     
 }
 
@@ -149,15 +149,22 @@ SDL_Texture* Score::loadImage(string path) {
 		//Get rid of old loaded surface
 		SDL_FreeSurface( loadedSurface );
 	}
-    // cout<<newTexture<<endl;
 	return newTexture;
 }
 
 void Score::writeToFile(){
     ofstream HighScoreFile("highScore.txt");
-    cout<<"file created"<<endl;
     HighScoreFile<<highScore;
     HighScoreFile.close();
 }
 
-
+Score::~Score(){
+    writeToFile();
+    SDL_DestroyTexture(highScoreText);
+    SDL_DestroyTexture(currScoreText);
+    SDL_DestroyTexture(levelScoreText);
+    highScoreText = nullptr;
+    currScoreText = nullptr;
+    levelScoreText = nullptr;
+    delete digit;
+}

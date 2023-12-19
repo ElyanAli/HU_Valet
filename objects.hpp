@@ -20,4 +20,5 @@ class Objects{
         void setImage(string img);
         SDL_Point getPosition();
         virtual float getAngle();
+        virtual ~Objects();
 };

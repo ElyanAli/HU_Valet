@@ -28,7 +28,6 @@ class Digits : public Objects { //inherit from object
         SDL_Rect getMover(int, int);
         SDL_Rect getMover(int, int, int, int);
     public:
-        // friend class CollisionManager;
         Digits(SDL_Renderer* Rndr);
         void drawDigit(int digit, int posX, int posY);
         void drawDigit(int digit, int posX, int posY, int w, int h);
