@@ -153,6 +153,7 @@ SDL_Texture* Score::loadImage(string path) {
 }
 
 void Score::writeToFile(){
+    std::cout << "writing to file" << std::endl;
     ofstream HighScoreFile("highScore.txt");
     HighScoreFile<<highScore;
     HighScoreFile.close();

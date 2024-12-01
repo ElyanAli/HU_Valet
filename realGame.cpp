@@ -230,7 +230,9 @@ void realGame::updateCurrentState(SDL_Event& event){
                     if (level == 1){
                         createLevel2();
                     }else{
-                        // you win and game over
+                        level = -1;// you win and game over
+                        gameOver = true;
+                        // scorer->writeToFile();
                     }
                 }
             }
